@@ -1,0 +1,9 @@
+# Dependencias de la aplicación (inferencia en CPU + interfaz).
+# Versiones fijadas según model/manifest.json (package_versions) para la consistencia numérica.
+# En Linux, para no descargar CUDA, instala antes PyTorch CPU:
+#   pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+numpy==2.1.3
+torch==2.11.0
+transformers==5.20.2
+safetensors==0.8.0
+PySide6==6.12.0

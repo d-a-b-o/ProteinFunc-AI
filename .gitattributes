@@ -1,0 +1,2 @@
+# Los archivos del modelo se verifican con SHA-256: Git no debe convertir saltos de línea.
+model/** -text

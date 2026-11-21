@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "model": "esm2",
+  "input": "MEVGGGSEECCVKVAVHVRPLIGDEKVQGCKDCVTVIPGKPQVQIGTHSFTFDHVYGSTSSPSWMFEECIVPLVDGLFQGYNATVLAYGQTGSGKTYTMGTGFKGGSQTGIIPQVMNALFSKIENLKHQIEFQLHVSFIEILKEEVRDLLDPTFLNKSDTASANTGKVNVPGKPPIQIRESSDGVITLAGSTEVSVSTLKEMGACLEQGSLSRATGSTNMNNQSSRSHAIFTITLEQMRKLNPVSGDGNPNDSMSEEYLCAKLHLVDLAGSERAKRTGSDGMRFKEGVHINKGLLALGNVISALGDEKKRKEGVHVPYRDSKLTRLLQDSLGGNSRTVMIACISPADINAEETLNTLKYANRARNIQNKPVVNRDPMSNEILKMRQQLEYLQAELCARGGSGEVQVLNERIAWLEAANEDLCRELYEYRSRCTIVEQREMDAQDGSPCSVESDGLKRNLRSRESRDNQIVETMIGGDSREIEEGAAKEWEHMLLQNTMDKELHELNRQLEEKESEMKVFGGHTVALKQHFGKKIQELEEEKRAVQQERDRLLAEIENLSAGSEGQALKVHDIHAQKLKSLEAQIMDLKKKQENQVQLLKKKQKSDEAAKRLQDEIQYIKAQKVQLQHRIKQEAEQFRQWKASREKELLQLRKEGRRNEYERHKLQALNQRQKLVLQRKTEEAAMATKRLKELLEARKSAARDNLAIANGNGTNGKINEKGLQRWLDHELEVMVNVHEVRFEYEKQSQVRAALAEELAVLKQVDELDSKGPSPSRGKNGCARGSSLSPNARVARISSLEHMLGISSNSLVAMASQLSEAEERERAFTNRGRWNQLRSMGDAKNLLQYMFNSLGDSRYQLWEKGIEIREMKEQLKELVGLLRQSELQRKEVENELKLREQAVAIALATSATGNSPISLKHIDDDVKSSSSPMSVPAQKQLKYSPGIVNGPARESAAFIGQTRKMIPLGQLPMKNLVANGQAGNGKLWRWKRSHHQWLVQFKWKWQKPWRLSEWIRHSDETIIRARPRSQVLTYRV",
+  "results": [
+    {
+      "id": "query_1",
+      "sequence": "MEVGGGSEECCVKVAVHVRPLIGDEKVQGCKDCVTVIPGKPQVQIGTHSFTFDHVYGSTSSPSWMFEECIVPLVDGLFQGYNATVLAYGQTGSGKTYTMGTGFKGGSQTGIIPQVMNALFSKIENLKHQIEFQLHVSFIEILKEEVRDLLDPTFLNKSDTASANTGKVNVPGKPPIQIRESSDGVITLAGSTEVSVSTLKEMGACLEQGSLSRATGSTNMNNQSSRSHAIFTITLEQMRKLNPVSGDGNPNDSMSEEYLCAKLHLVDLAGSERAKRTGSDGMRFKEGVHINKGLLALGNVISALGDEKKRKEGVHVPYRDSKLTRLLQDSLGGNSRTVMIACISPADINAEETLNTLKYANRARNIQNKPVVNRDPMSNEILKMRQQLEYLQAELCARGGSGEVQVLNERIAWLEAANEDLCRELYEYRSRCTIVEQREMDAQDGSPCSVESDGLKRNLRSRESRDNQIVETMIGGDSREIEEGAAKEWEHMLLQNTMDKELHELNRQLEEKESEMKVFGGHTVALKQHFGKKIQELEEEKRAVQQERDRLLAEIENLSAGSEGQALKVHDIHAQKLKSLEAQIMDLKKKQENQVQLLKKKQKSDEAAKRLQDEIQYIKAQKVQLQHRIKQEAEQFRQWKASREKELLQLRKEGRRNEYERHKLQALNQRQKLVLQRKTEEAAMATKRLKELLEARKSAARDNLAIANGNGTNGKINEKGLQRWLDHELEVMVNVHEVRFEYEKQSQVRAALAEELAVLKQVDELDSKGPSPSRGKNGCARGSSLSPNARVARISSLEHMLGISSNSLVAMASQLSEAEERERAFTNRGRWNQLRSMGDAKNLLQYMFNSLGDSRYQLWEKGIEIREMKEQLKELVGLLRQSELQRKEVENELKLREQAVAIALATSATGNSPISLKHIDDDVKSSSSPMSVPAQKQLKYSPGIVNGPARESAAFIGQTRKMIPLGQLPMKNLVANGQAGNGKLWRWKRSHHQWLVQFKWKWQKPWRLSEWIRHSDETIIRARPRSQVLTYRV",
+      "length": 1033,
+      "residues_used": 512,
+      "truncated": true,
+      "threshold": 0.45,
+      "predictions": [
+        {
+          "go_term": "GO:0003824",
+          "name": "catalytic activity",
+          "aspect": "MF",
+          "score": 0.880834698677063
+        },
+        {
+          "go_term": "GO:0016853",
+          "name": "isomerase activity",
+          "aspect": "MF",
+          "score": 0.880834698677063
+        },
+        {
+          "go_term": "GO:0120543",
+          "name": "macromolecular conformation isomerase activity",
+          "aspect": "MF",
+          "score": 0.880834698677063
+        },
+        {
+          "go_term": "GO:0140657",
+          "name": "ATP-dependent activity",
+          "aspect": "MF",
+          "score": 0.7269786596298218
+        },
+        {
+          "go_term": "GO:0110165",
+          "name": "cellular anatomical structure",
+          "aspect": "CC",
+          "score": 0.6685093641281128
+        },
+        {
+          "go_term": "GO:0009987",
+          "name": "cellular process",
+          "aspect": "BP",
+          "score": 0.6643815636634827
+        },
+        {
+          "go_term": "GO:0007017",
+          "name": "microtubule-based process",
+          "aspect": "BP",
+          "score": 0.6643815636634827
+        },
+        {
+          "go_term": "GO:0043226",
+          "name": "organelle",
+          "aspect": "CC",
+          "score": 0.6635885834693909
+        },
+        {
+          "go_term": "GO:0065007",
+          "name": "biological regulation",
+          "aspect": "BP",
+          "score": 0.662250816822052
+        },
+        {
+          "go_term": "GO:0005622",
+          "name": "intracellular anatomical structure",
+          "aspect": "CC",
+          "score": 0.6557603478431702
+        },
+        {
+          "go_term": "GO:0043229",
+          "name": "intracellular organelle",
+          "aspect": "CC",
+          "score": 0.6515748500823975
+        },
+        {
+          "go_term": "GO:0005488",
+          "name": "binding",
+          "aspect": "MF",
+          "score": 0.6310732364654541
+        },
+        {
+          "go_term": "GO:0050789",
+          "name": "regulation of biological process",
+          "aspect": "BP",
+          "score": 0.6309100389480591
+        },
+        {
+          "go_term": "GO:0043228",
+          "name": "membraneless organelle",
+          "aspect": "CC",
+          "score": 0.6037923097610474
+        },
+        {
+          "go_term": "GO:0043232",
+          "name": "intracellular membraneless organelle",
+          "aspect": "CC",
+          "score": 0.6037923097610474
+        },
+        {
+          "go_term": "GO:0005856",
+          "name": "cytoskeleton",
+          "aspect": "CC",
+          "score": 0.6037923097610474
+        },
+        {
+          "go_term": "GO:0015630",
+          "name": "microtubule cytoskeleton",
+          "aspect": "CC",
+          "score": 0.6037923097610474
+        },
+        {
+          "go_term": "GO:0043227",
+          "name": "membrane-bounded organelle",
+          "aspect": "CC",
+          "score": 0.5884518027305603
+        },
+        {
+          "go_term": "GO:0050794",
+          "name": "regulation of cellular process",
+          "aspect": "BP",
+          "score": 0.5852740406990051
+        },
+        {
+          "go_term": "GO:0005819",
+          "name": "spindle",
+          "aspect": "CC",
+          "score": 0.5808971524238586
+        },
+        {
+          "go_term": "GO:0005515",
+          "name": "protein binding",
+          "aspect": "MF",
+          "score": 0.5660622715950012
+        },
+        {
+          "go_term": "GO:0043231",
+          "name": "intracellular membrane-bounded organelle",
+          "aspect": "CC",
+          "score": 0.5359596014022827
+        },
+        {
+          "go_term": "GO:0051179",
+          "name": "localization",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0051234",
+          "name": "establishment of localization",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0006810",
+          "name": "transport",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0051641",
+          "name": "cellular localization",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0051649",
+          "name": "establishment of localization in cell",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0046907",
+          "name": "intracellular transport",
+          "aspect": "BP",
+          "score": 0.5315601229667664
+        },
+        {
+          "go_term": "GO:0005634",
+          "name": "nucleus",
+          "aspect": "CC",
+          "score": 0.5001007914543152
+        },
+        {
+          "go_term": "GO:0016787",
+          "name": "hydrolase activity",
+          "aspect": "MF",
+          "score": 0.4948314130306244
+        },
+        {
+          "go_term": "GO:0032502",
+          "name": "developmental process",
+          "aspect": "BP",
+          "score": 0.4768640398979187
+        },
+        {
+          "go_term": "GO:0099080",
+          "name": "supramolecular complex",
+          "aspect": "CC",
+          "score": 0.4695607125759125
+        },
+        {
+          "go_term": "GO:0099081",
+          "name": "supramolecular polymer",
+          "aspect": "CC",
+          "score": 0.4695607125759125
+        },
+        {
+          "go_term": "GO:0099512",
+          "name": "supramolecular fiber",
+          "aspect": "CC",
+          "score": 0.4695607125759125
+        },
+        {
+          "go_term": "GO:0099513",
+          "name": "polymeric cytoskeletal fiber",
+          "aspect": "CC",
+          "score": 0.4695607125759125
+        },
+        {
+          "go_term": "GO:0005874",
+          "name": "microtubule",
+          "aspect": "CC",
+          "score": 0.4695607125759125
+        },
+        {
+          "go_term": "GO:0048856",
+          "name": "anatomical structure development",
+          "aspect": "BP",
+          "score": 0.4597994089126587
+        },
+        {
+          "go_term": "GO:0050896",
+          "name": "response to stimulus",
+          "aspect": "BP",
+          "score": 0.4587100148200989
+        },
+        {
+          "go_term": "GO:0071840",
+          "name": "cellular component organization or biogenesis",
+          "aspect": "BP",
+          "score": 0.4535607695579529
+        },
+        {
+          "go_term": "GO:0016043",
+          "name": "cellular component organization",
+          "aspect": "BP",
+          "score": 0.4535607695579529
+        },
+        {
+          "go_term": "GO:0032501",
+          "name": "multicellular organismal process",
+          "aspect": "BP",
+          "score": 0.4530169367790222
+        },
+        {
+          "go_term": "GO:0007275",
+          "name": "multicellular organism development",
+          "aspect": "BP",
+          "score": 0.4530169367790222
+        },
+        {
+          "go_term": "GO:0008092",
+          "name": "cytoskeletal protein binding",
+          "aspect": "MF",
+          "score": 0.45163360238075256
+        },
+        {
+          "go_term": "GO:0015631",
+          "name": "tubulin binding",
+          "aspect": "MF",
+          "score": 0.45163360238075256
+        },
+        {
+          "go_term": "GO:0008017",
+          "name": "microtubule binding",
+          "aspect": "MF",
+          "score": 0.45163360238075256
+        }
+      ],
+      "status": "ok"
+    }
+  ]
+}
