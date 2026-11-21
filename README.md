@@ -31,7 +31,7 @@ Ambos incluyen `proteinfunc-check`, que verifica el modelo y hace una predicció
 ### Publicar una versión nueva
 
 1. Cambiar `__version__` en `proteinfunc_app/__init__.py`.
-2. Crear y subir la etiqueta `vX.Y.Z` en `main`. El workflow `.github/workflows/release.yml` prueba, empaqueta en Windows y Linux, y publica el release con los instaladores y `SHA256SUMS.txt`.
+2. En GitHub: **Actions → Compilar y publicar → Run workflow** sobre `main`, marcando **publicar** (o subir una etiqueta `vX.Y.Z`). El workflow prueba, empaqueta en Windows y Linux, crea la etiqueta `v<versión>` y publica el release con los instaladores y `SHA256SUMS.txt`.
 
 ## Instalación (desarrollo)
 
