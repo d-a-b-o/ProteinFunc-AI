@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -53,7 +54,32 @@ def run_check(bundle: Path, fasta: Path | None) -> int:
     return 0
 
 
+def _ensure_std_streams() -> None:
+    """En el .exe de Windows sin consola, sys.stdout/stderr son None; cualquier escritura
+    (avisos de librerías, barras de progreso) fallaría. Se redirigen a un registro."""
+    for stream in (sys.stdout, sys.stderr):
+        # Consolas de Windows con cp1252: evitar errores con «≥», «✓», etc.
+        if stream is not None and hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(errors="replace")
+            except (OSError, ValueError):
+                pass
+    if sys.stdout is not None and sys.stderr is not None:
+        return
+    log_dir = Path(os.environ.get("LOCALAPPDATA") or Path.home() / ".local" / "state") / "ProteinFuncAI"
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+        stream = open(log_dir / "proteinfunc.log", "a", encoding="utf-8", buffering=1)
+    except OSError:
+        stream = open(os.devnull, "w", encoding="utf-8")
+    if sys.stdout is None:
+        sys.stdout = stream
+    if sys.stderr is None:
+        sys.stderr = stream
+
+
 def main(argv: list[str] | None = None) -> int:
+    _ensure_std_streams()
     parser = argparse.ArgumentParser(prog="proteinfunc_app", description=APP_NAME)
     parser.add_argument("--model", type=Path, help="Carpeta del paquete de modelo (por defecto model/)")
     parser.add_argument("--check", nargs="?", const="", metavar="FASTA",

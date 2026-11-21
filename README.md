@@ -19,6 +19,20 @@ Funciona en **Windows 64 bits y Linux** (Python + PySide6).
 | Análisis en segundo plano con progreso y **cancelación** (nunca muestra resultados parciales) | RF-10 |
 | **Historial** local en SQLite: filtrar por fecha, versión del modelo y estado; reabrir resultados | RF-11 |
 
+## Instalación
+
+Descarga el instalador desde [Releases](https://github.com/d-a-b-o/ProteinFunc-AI/releases/latest). No necesita Python ni Internet para usarse.
+
+- **Windows 10/11 (64 bits):** `ProteinFuncAI-<versión>-windows-x64-setup.exe` → doble clic y seguir el asistente (no pide administrador). Si aparece «Windows protegió su PC», pulsa *Más información → Ejecutar de todas formas* (el instalador no está firmado). También hay una versión portable `.zip`.
+- **Linux x86_64:** descomprime `ProteinFuncAI-<versión>-linux-x86_64.tar.gz` y ejecuta `./install.sh` (sin `sudo`; añade la app al menú). Desinstalar: `./install.sh --uninstall`.
+
+Ambos incluyen `proteinfunc-check`, que verifica el modelo y hace una predicción de ejemplo sin conexión.
+
+### Publicar una versión nueva
+
+1. Cambiar `__version__` en `proteinfunc_app/__init__.py`.
+2. Crear y subir la etiqueta `vX.Y.Z` en `main`. El workflow `.github/workflows/release.yml` prueba, empaqueta en Windows y Linux, y publica el release con los instaladores y `SHA256SUMS.txt`.
+
 ## Instalación (desarrollo)
 
 Requiere **Python 3.11, 3.12 o 3.13** (64 bits). La instalación necesita Internet; el uso posterior no.
@@ -94,6 +108,9 @@ model/                     # Paquete del modelo (manifest.json, weights.pt, back
 examples/                  # FASTA de ejemplo
 tests/                     # pytest (usa el modelo real)
 tools/make_checksums.py    # Regenera model/SHA256SUMS
+tools/make_icon.py         # Genera el icono
+installer/                 # Inno Setup (Windows), install.sh (Linux), notas del release
+.github/workflows/         # Compilación y publicación del release
 proteinfunc.spec           # PyInstaller
 ```
 
@@ -130,7 +147,7 @@ Cubren validación, integridad (archivo alterado, faltante, manifiesto incoheren
 
 ## Ejecutable (PyInstaller)
 
-PyInstaller no compila entre sistemas: el `.exe` se genera en Windows y el binario de Linux en Linux. Instalar PyTorch **CPU** antes de empaquetar para no incluir CUDA.
+Los instaladores oficiales los genera GitHub Actions. Para compilar a mano: PyInstaller no compila entre sistemas: el `.exe` se genera en Windows y el binario de Linux en Linux. Instalar PyTorch **CPU** antes de empaquetar para no incluir CUDA.
 
 ```bash
 pip install -r requirements-dev.txt
@@ -140,7 +157,7 @@ pip install -r requirements-dev.txt
 pyinstaller proteinfunc.spec --noconfirm
 ```
 
-El resultado queda en `dist/ProteinFuncAI/` (ejecutable `ProteinFuncAI` / `ProteinFuncAI.exe` junto con `_internal/`, que incluye el modelo). Se distribuye la carpeta completa.
+El resultado queda en `dist/ProteinFuncAI/`: `ProteinFuncAI(.exe)` (interfaz), `proteinfunc-check(.exe)` (verificación por consola) y `_internal/` (librerías y modelo). Se distribuye la carpeta completa. El instalador de Windows se compila con Inno Setup (`installer/windows/ProteinFuncAI.iss`); el paquete de Linux usa `installer/linux/install.sh`.
 
 ## Datos del modelo incluido
 
