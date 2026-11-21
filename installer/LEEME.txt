@@ -1,0 +1,21 @@
+ProteinFunc AI Desktop
+======================
+
+Predicción local de funciones Gene Ontology (MF, BP, CC) a partir de secuencias de
+proteínas. Todo el análisis ocurre en tu equipo: no se envían secuencias a Internet.
+
+LINUX
+  1. tar -xzf ProteinFuncAI-*-linux-x86_64.tar.gz
+  2. cd ProteinFuncAI-*-linux-x86_64
+  3. ./install.sh
+  Abre «ProteinFunc AI Desktop» desde el menú de aplicaciones o ejecuta proteinfunc-ai.
+  Desinstalar: ./install.sh --uninstall
+  Sin instalar: ./ProteinFuncAI/ProteinFuncAI
+
+VERIFICAR LA INSTALACIÓN (sin conexión)
+  proteinfunc-check            (Linux)
+  proteinfunc-check.exe        (Windows, o «Verificar instalación» en el menú Inicio)
+
+IMPORTANTE
+  Los puntajes no son probabilidades calibradas. Las predicciones son hipótesis
+  computacionales y no sustituyen la validación experimental.
