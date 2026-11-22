@@ -93,7 +93,7 @@ python -m proteinfunc_app --check examples/muestra.fasta
 5. **Exportar** (Ctrl+E) en CSV (UTF-8 con BOM, compatible con Excel), TSV o JSON.
 6. **Historial** (Ctrl+H) para reabrir ejecuciones anteriores. **Modelo** muestra manifiesto, verificaciones, huellas SHA-256, métricas de validación y versiones. **Preferencias** (Ctrl+,) ajusta dispositivo, lote e hilos. **Acerca de** explica cómo interpretar los resultados.
 
-`examples/muestra.fasta` trae tres proteínas (una se trunca a 512 residuos) y `examples/con_errores.fasta` muestra cómo se reportan los errores.
+`examples/muestra.fasta` trae tres proteínas (una se trunca a 512 residuos) y `examples/con_errores.fasta` muestra cómo se reportan los errores. En `examples/pruebas/` hay más archivos de prueba (proteínas conocidas, casos límite, errores y un lote de 300 secuencias); su `LEEME.md` explica qué resultado esperar con cada uno.
 
 ### Formatos de exportación
 

@@ -64,3 +64,19 @@ def test_low_complexity_is_warning_but_real_proteins_are_not():
     assert complexity_warning("X" * 30 + "MKTAYIAKQR") is not None
     for record in validate_text(read_input_file(EXAMPLES / "muestra.fasta"), None).records:
         assert complexity_warning(record.sequence) is None, record.record_id
+
+
+def test_example_test_files_validate_as_documented():
+    """Los FASTA de examples/pruebas mantienen el resultado descrito en su LEEME.md."""
+    expected = {
+        "01_proteinas_conocidas.fasta": "8 registros · 8 válidos",
+        "02_secuencia_para_pegar.txt": "1 registro · 1 válido",
+        "03_casos_limite.fasta": "6 registros · 6 válidos · 2 con aviso",
+        "04_errores.fasta": "7 registros · 2 válidos · 5 con error",
+        "05_lote_300_sinteticas.fasta": "300 registros · 300 válidos · 94 con aviso",
+    }
+    folder = EXAMPLES / "pruebas"
+    for name, summary in expected.items():
+        assert validate_text(read_input_file(folder / name), 512).summary() == summary, name
+    report = validate_text(read_input_file(folder / "06_texto_antes_de_cabecera.fasta"), 512)
+    assert "antes de la primera cabecera" in report.global_errors[0]
