@@ -11,3 +11,4 @@ dist/
 .cache/
 .tools/
 .packages/
+THIRD_PARTY_LICENSES.txt

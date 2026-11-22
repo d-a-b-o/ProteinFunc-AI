@@ -68,6 +68,11 @@ jobs:
       - name: Pruebas
         run: python -m pytest tests -q
 
+      - name: Inventario de licencias de terceros
+        run: |
+          pip install pip-licenses
+          python tools/make_licenses.py
+
       - name: Empaquetar con PyInstaller
         run: pyinstaller proteinfunc.spec --noconfirm
 
@@ -85,6 +90,7 @@ jobs:
           $v = "${{ steps.version.outputs.version }}"
           New-Item -ItemType Directory -Force out | Out-Null
           Copy-Item installer\LEEME.txt dist\ProteinFuncAI\LEEME.txt
+          Copy-Item THIRD_PARTY_LICENSES.txt dist\ProteinFuncAI\THIRD_PARTY_LICENSES.txt
           Compress-Archive -Path dist\ProteinFuncAI -DestinationPath "out\ProteinFuncAI-$v-windows-x64-portable.zip"
           $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
           if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress; }
@@ -99,7 +105,7 @@ jobs:
           name="ProteinFuncAI-$v-linux-x86_64"
           mkdir -p "stage/$name" out
           cp -a dist/ProteinFuncAI "stage/$name/ProteinFuncAI"
-          cp installer/linux/install.sh installer/LEEME.txt proteinfunc_app/icon.png "stage/$name/"
+          cp installer/linux/install.sh installer/LEEME.txt proteinfunc_app/icon.png THIRD_PARTY_LICENSES.txt "stage/$name/"
           chmod +x "stage/$name/install.sh"
           tar -C stage -czf "out/$name.tar.gz" "$name"
           # Prueba del instalador en un HOME temporal.

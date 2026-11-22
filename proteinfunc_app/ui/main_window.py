@@ -6,9 +6,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from PySide6.QtCore import QSortFilterProxyModel, Qt, QTimer
+from PySide6.QtCore import QSettings, QSortFilterProxyModel, Qt, QTimer
 from PySide6.QtGui import QAction, QDragEnterEvent, QDropEvent, QKeySequence
-from PySide6.QtWidgets import (QAbstractItemView, QComboBox, QFileDialog, QFrame, QHBoxLayout,
+from PySide6.QtWidgets import (QAbstractItemView, QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout,
                                QHeaderView, QLabel, QLineEdit, QMainWindow, QMessageBox,
                                QPlainTextEdit, QProgressBar, QPushButton, QSlider, QSplitter,
                                QStackedWidget, QTableView, QVBoxLayout, QWidget)
@@ -20,14 +20,21 @@ from ..core.results import ALL_ASPECTS, SCORE_FLOOR, SCORE_NOTE, RunResult, View
 from ..core.validation import ValidationReport, read_input_file, validate_text
 from ..services import InferenceWorker, LoadedModel
 from . import theme
-from .dialogs import ExportDialog, HistoryDialog, PackageDialog, ValidationDialog
+from ..core.validation import complexity_warning
+from ..services import available_devices
+from .gc_guard import GarbageCollector
+from .dialogs import (AboutDialog, ExportDialog, HistoryDialog, PackageDialog, PreferencesDialog,
+                      ValidationDialog)
 from .widgets import (COL_ASPECT, COL_NAME, COL_SCORE, AspectBadgeDelegate, Banner, Card,
                       ResultsTableModel, ScoreBarDelegate, hbox, muted, section_label)
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, bundle_dir: Path, history: History, device: str = "cpu"):
+    def __init__(self, bundle_dir: Path, history: History, device: str | None = None,
+                 settings: QSettings | None = None):
         super().__init__()
+        self.settings = settings if settings is not None else QSettings()
+        self._gc = GarbageCollector(self)  # Basura (incluidos objetos Qt) solo en el hilo gráfico.
         self.bundle_dir = Path(bundle_dir)
         self.history = history
         self.model: LoadedModel | None = None
@@ -39,7 +46,8 @@ class MainWindow(QMainWindow):
         self.running = False
         self.run_id: int | None = None
         self._pending_input: tuple[str, str, ValidationReport] | None = None
-        self.last_dir = Path.home()
+        last_dir = Path(str(self.settings.value("last_dir", str(Path.home()))))
+        self.last_dir = last_dir if last_dir.is_dir() else Path.home()
         self.max_length = self._peek_max_length()
 
         self.setWindowTitle(APP_NAME)
@@ -48,7 +56,8 @@ class MainWindow(QMainWindow):
         self.setAcceptDrops(True)
         self._build_ui()
         self._build_actions()
-        self._start_worker(device)
+        self._restore_settings()
+        self._start_worker(device or str(self.settings.value("device", "cpu")))
         self._refresh_state()
 
     # ------------------------------------------------------------------ construcción
@@ -69,12 +78,12 @@ class MainWindow(QMainWindow):
         body.setContentsMargins(16, 16, 16, 12)
         body.setSpacing(14)
         body.addWidget(self._build_sidebar())
-        splitter = QSplitter(Qt.Horizontal)
+        self.splitter = splitter = QSplitter(Qt.Horizontal)
         splitter.setChildrenCollapsible(False)
         splitter.addWidget(self._build_results())
         splitter.addWidget(self._build_detail())
         splitter.setStretchFactor(0, 1)
-        splitter.setSizes([900, 260])
+        splitter.setSizes([880, 280])
         body.addWidget(splitter, 1)
         outer.addLayout(body, 1)
         self.setCentralWidget(root)
@@ -106,15 +115,21 @@ class MainWindow(QMainWindow):
         self.model_chip.setObjectName("ModelChip")
         layout.addWidget(self.model_chip)
         self.history_button = QPushButton("Historial")
-        self.package_button = QPushButton("Paquete del modelo")
-        for b in (self.history_button, self.package_button):
+        self.package_button = QPushButton("Modelo")
+        self.prefs_button = QPushButton("Preferencias")
+        self.about_button = QPushButton("Acerca de")
+        for b in (self.history_button, self.package_button, self.prefs_button, self.about_button):
             b.setObjectName("HeaderButton")
             b.setCursor(Qt.PointingHandCursor)
             layout.addWidget(b)
         self.history_button.setToolTip("Ejecuciones anteriores (Ctrl+H)")
         self.package_button.setToolTip("Manifiesto, verificaciones y huellas SHA-256")
+        self.prefs_button.setToolTip("Dispositivo, tamaño de lote e hilos (Ctrl+,)")
+        self.about_button.setToolTip("Versión, interpretación de resultados y licencias")
         self.history_button.clicked.connect(self.show_history)
         self.package_button.clicked.connect(self.show_package)
+        self.prefs_button.clicked.connect(self.show_preferences)
+        self.about_button.clicked.connect(self.show_about)
         return bar
 
     def _build_sidebar(self) -> QWidget:
@@ -194,6 +209,13 @@ class MainWindow(QMainWindow):
             self.aspect_buttons[aspect] = btn
             row.addWidget(btn)
         b.addLayout(row)
+        self.specific_check = QCheckBox("Solo términos específicos")
+        self.specific_check.setChecked(True)
+        self.specific_check.setToolTip(
+            "Oculta los términos generales (ancestros GO) cuando ya se muestra un término más "
+            "específico de la misma proteína. Desmárcalo para ver la jerarquía completa.")
+        self.specific_check.toggled.connect(self._refresh_table)
+        b.addWidget(self.specific_check)
 
         b.addSpacing(4)
         self.threshold_title = section_label("Umbral")
@@ -294,9 +316,13 @@ class MainWindow(QMainWindow):
     def _build_detail(self) -> QWidget:
         card = Card(spacing=6)
         card.setMinimumWidth(230)
-        title = QLabel("Detalle")
-        title.setObjectName("Title")
-        card.body.addWidget(title)
+        self.detail_title = QLabel("Resumen")
+        self.detail_title.setObjectName("Title")
+        self.back_to_summary = QPushButton("← Resumen")
+        self.back_to_summary.setObjectName("Link")
+        self.back_to_summary.setCursor(Qt.PointingHandCursor)
+        self.back_to_summary.clicked.connect(lambda: (self.table.clearSelection(), self._show_detail(None)))
+        card.body.addWidget(hbox(self.detail_title, None, self.back_to_summary))
         self.detail = QLabel()
         self.detail.setWordWrap(True)
         self.detail.setTextFormat(Qt.RichText)
@@ -323,11 +349,20 @@ class MainWindow(QMainWindow):
         action("Cancelar", QKeySequence(Qt.Key_Escape), self.cancel_analysis)
         action("Exportar", QKeySequence("Ctrl+E"), self.export_results)
         action("Historial", QKeySequence("Ctrl+H"), self.show_history)
+        action("Preferencias", QKeySequence("Ctrl+,"), self.show_preferences)
         action("Buscar", QKeySequence.Find, lambda: (self.search.setFocus(), self.search.selectAll()))
 
     # ---------------------------------------------------------------------- worker
     def _start_worker(self, device: str):
+        if device != "cpu" and device not in {k for k, _ in available_devices()}:
+            device = "cpu"  # La GPU guardada en preferencias ya no está disponible.
         self.worker = InferenceWorker(self.bundle_dir, device, self)
+        try:
+            chunk = int(self.settings.value("chunk_size", 8))
+            threads = int(self.settings.value("threads", 0)) or None
+        except (TypeError, ValueError):
+            chunk, threads = 8, None
+        self.worker.configure(chunk, threads)
         self.worker.loading.connect(self._on_loading)
         self.worker.loaded.connect(self._on_model_loaded)
         self.worker.load_failed.connect(self._on_model_failed)
@@ -350,6 +385,7 @@ class MainWindow(QMainWindow):
                 self, "Análisis en curso", "Hay un análisis en curso. ¿Cancelarlo y salir?") != QMessageBox.Yes:
             event.ignore()
             return
+        self._save_settings()
         self.shutdown()
         super().closeEvent(event)
 
@@ -359,12 +395,13 @@ class MainWindow(QMainWindow):
         m = model.predictor.manifest
         self.max_length = int(m["max_length"])
         self.slider.setValue(round(float(m["threshold"]) * 100))
+        self._on_threshold_changed(self.slider.value())  # Actualiza la etiqueta aunque el valor no cambie.
         kind = m["model_spec"]["kind"].upper()
         self.model_chip.setText(f"{kind} · {len(m['classes'])} términos · listo")
         self.model_chip.setProperty("state", "ok")
         self._repolish(self.model_chip)
         self.model_status.setText(f"Modelo {m['model_spec']['kind']} · {self.report.short_fingerprint}")
-        self.device_status.setText(model.device.upper())
+        self.device_status.setText("GPU" if model.device.startswith("cuda") else "CPU")
         self._set_status(f"Modelo listo en {model.load_seconds:.1f} s.")
         if self.validation is not None:
             self._revalidate()
@@ -495,10 +532,13 @@ class MainWindow(QMainWindow):
         self.progress.setValue(done)
         self.progress_label.setText(f"{done} de {total} proteínas")
 
-    def _on_finished(self, results: list, seconds: float):
+    def _on_finished(self, results: list, perf: dict):
         text, source, report = self._pending_input
         m = self.model.predictor.manifest
+        seconds = perf.get("seconds", 0.0)
         self.result = RunResult(
+            ancestors={t: list(v.get("ancestors", [])) for t, v in m["label_metadata"].items()},
+            performance=perf,
             source_name=source, input_text=text, proteins=results, model_kind=m["model_spec"]["kind"],
             model_threshold=float(m["threshold"]), max_length=int(m["max_length"]),
             fingerprint=self.report.fingerprint, started_at=self._started_at,
@@ -509,7 +549,9 @@ class MainWindow(QMainWindow):
         except Exception as exc:  # noqa: BLE001 - el historial es opcional
             self._set_status(f"Resultados listos (no se guardó en el historial: {exc})")
         self.running = False
-        self.progress_label.setText(f"Completado: {len(results)} proteínas en {seconds:.1f} s")
+        mem = perf.get("peak_memory_mb")
+        self.progress_label.setText(f"Completado: {len(results)} proteínas en {seconds:.1f} s"
+                                    + (f" · memoria máx. {mem:.0f} MB" if mem else ""))
         self._set_status("Análisis completado.")
         self._show_result()
 
@@ -549,7 +591,7 @@ class MainWindow(QMainWindow):
             ids = self.result.protein_ids()
             self.protein_combo.addItem(f"Todas las proteínas ({len(ids)})", None)
             for p in self.result.proteins:
-                flag = " ⚠" if p["truncated"] else ""
+                flag = " ⚠" if p["truncated"] or complexity_warning(p["sequence"]) else ""
                 self.protein_combo.addItem(f"{p['id']} · {p['length']} aa{flag}", p["id"])
         self.protein_combo.blockSignals(False)
         self._refresh_table()
@@ -558,7 +600,8 @@ class MainWindow(QMainWindow):
     def current_view(self) -> ViewFilter:
         aspects = tuple(a for a, btn in self.aspect_buttons.items() if btn.isChecked())
         return ViewFilter(threshold=self.slider.value() / 100, aspects=aspects,
-                          protein_id=self.protein_combo.currentData())
+                          protein_id=self.protein_combo.currentData(),
+                          specific_only=self.specific_check.isChecked())
 
     def _refresh_table(self, *_):
         if not self.result:
@@ -582,6 +625,13 @@ class MainWindow(QMainWindow):
                               for p in truncated[:6])
             more = f" y {len(truncated) - 6} más" if len(truncated) > 6 else ""
             notes.append(f"<b>Secuencias truncadas:</b> se usaron solo los primeros residuos — {items}{more}.")
+        atypical = [p["id"] for p in self.result.proteins
+                    if (not view.protein_id or p["id"] == view.protein_id) and complexity_warning(p["sequence"])]
+        if atypical:
+            items = ", ".join(html.escape(x) for x in atypical[:6]) + (
+                f" y {len(atypical) - 6} más" if len(atypical) > 6 else "")
+            notes.append(f"<b>Secuencias atípicas</b> (baja complejidad o muchos residuos ambiguos): {items}. "
+                         "El modelo les asigna funciones igualmente; los resultados son poco fiables.")
         if self.result.rejected:
             notes.append(f"<b>{len(self.result.rejected)} registro(s) excluidos</b> por la validación.")
         self.empty_notice.set("warning", "<br>".join(notes))
@@ -627,14 +677,14 @@ class MainWindow(QMainWindow):
 
     def _show_detail(self, row):
         self._detail_row = row
-        self.copy_seq.setEnabled(row is not None)
+        self.copy_seq.setEnabled(row is not None or bool(self.result and self.protein_combo.currentData()))
+        self.back_to_summary.setVisible(row is not None)
         if row is None:
-            self.detail.setText(f"<span style='color:{theme.MUTED}'>Selecciona una fila para ver el término GO, "
-                                "su origen y los ancestros en el vocabulario.</span>")
+            self.detail_title.setText("Resumen")
+            self.detail.setText(self._summary_html())
             return
-        meta = {}
-        if self.model is not None:
-            meta = self.model.predictor.metadata
+        self.detail_title.setText("Detalle")
+        meta = self.model.predictor.metadata if self.model is not None else {}
         protein = self.result.protein(row.protein_id) if self.result else None
         scores = {p["go_term"]: p["score"] for p in (protein or {}).get("predictions", [])}
         color = theme.ASPECT_COLORS.get(row.aspect, theme.MUTED)
@@ -649,12 +699,14 @@ class MainWindow(QMainWindow):
             + (" — heredado de un término más específico (regla is_a / part_of)" if row.origin == "propagated" else "")
             + "</p>",
         ]
-        ancestors = meta.get(row.go_term, {}).get("ancestors", [])
+        ancestors = meta.get(row.go_term, {}).get("ancestors", []) or (self.result.ancestors.get(row.go_term, [])
+                                                                       if self.result else [])
         if ancestors:
             items = "".join(
                 f"<li><code>{a}</code> {html.escape(meta.get(a, {}).get('name', ''))}"
                 + (f" — {theme.num(scores[a])}" if a in scores else "") + "</li>" for a in ancestors[:12])
-            parts.append(f"<p style='margin:0'><b>Ancestros en el vocabulario</b></p><ul style='margin-top:2px'>{items}</ul>")
+            parts.append(f"<p style='margin:0'><b>Términos generales (ancestros)</b></p>"
+                         f"<ul style='margin-top:2px'>{items}</ul>")
         if protein:
             trunc = (f"<br><span style='color:{theme.WARN}'>Truncada: se usaron {protein['residues_used']} de "
                      f"{protein['length']} residuos.</span>") if protein["truncated"] else ""
@@ -662,11 +714,65 @@ class MainWindow(QMainWindow):
                          f"Longitud: {protein['length']} aa{trunc}</p>")
         self.detail.setText("".join(parts))
 
+    def _summary_html(self) -> str:
+        if not self.result:
+            return (f"<span style='color:{theme.MUTED}'>Aquí verás un resumen por proteína: cuántas funciones "
+                    "tiene en cada aspecto y las principales. Selecciona una fila para ver el detalle del "
+                    "término GO.</span>")
+        view = self.current_view()
+        summary = self.result.summary(view)
+        out = []
+        if not view.protein_id:
+            totals = {a: sum(x["counts"][a] for x in summary) for a in ALL_ASPECTS}
+            with_terms = sum(1 for x in summary if any(x["counts"].values()))
+            out.append(f"<p style='margin:0 0 6px 0'><b>{len(summary)} proteína(s)</b> · {with_terms} con funciones "
+                       f"sobre el umbral</p>")
+            out.append(self._aspect_counts_html(totals))
+            out.append(f"<p style='margin:8px 0 2px 0;color:{theme.MUTED}'>Elige una proteína arriba para ver "
+                       "sus funciones principales.</p>")
+            for x in summary[:12]:
+                c = x["counts"]
+                out.append(f"<div><code>{html.escape(x['id'])}</code> "
+                           f"<span style='color:{theme.MUTED}'>MF {c['MF']} · BP {c['BP']} · CC {c['CC']}</span></div>")
+            if len(summary) > 12:
+                out.append(f"<div style='color:{theme.MUTED}'>… y {len(summary) - 12} más</div>")
+            return "".join(out)
+        x = summary[0]
+        protein = self.result.protein(x["id"])
+        out.append(f"<p style='margin:0'><b><code>{html.escape(x['id'])}</code></b> · {x['length']} aa</p>")
+        warning = complexity_warning(protein["sequence"])
+        if protein["truncated"]:
+            out.append(f"<p style='margin:2px 0;color:{theme.WARN}'>Se usaron los primeros "
+                       f"{protein['residues_used']} residuos.</p>")
+        if warning:
+            out.append(f"<p style='margin:2px 0;color:{theme.WARN}'>{html.escape(warning)}</p>")
+        out.append(self._aspect_counts_html(x["counts"]))
+        for a in ALL_ASPECTS:
+            if not x["top"][a]:
+                continue
+            color = theme.ASPECT_COLORS[a]
+            items = "".join(f"<li>{html.escape(t['name'])} <span style='color:{theme.MUTED}'>"
+                            f"{theme.num(t['score'], 2)}</span></li>" for t in x["top"][a])
+            out.append(f"<p style='margin:8px 0 0 0'><b style='color:{color}'>{a}</b> "
+                       f"{theme.ASPECT_NAMES[a]}</p><ul style='margin-top:2px'>{items}</ul>")
+        if not any(x["counts"].values()):
+            out.append(f"<p style='color:{theme.MUTED}'>Ninguna función superó el umbral con los filtros "
+                       "actuales. No implica que la proteína carezca de función.</p>")
+        return "".join(out)
+
+    @staticmethod
+    def _aspect_counts_html(counts: dict) -> str:
+        cells = "".join(
+            f"<td style='padding:4px 10px 4px 0'><span style='background:{theme.ASPECT_COLORS[a]};color:white;"
+            f"font-weight:600'>&nbsp;{a}&nbsp;</span> <b>{counts.get(a, 0)}</b></td>" for a in ALL_ASPECTS)
+        return f"<table cellspacing='0'><tr>{cells}</tr></table>"
+
     def _copy_sequence(self):
         from PySide6.QtGui import QGuiApplication
 
-        if self._detail_row and self.result:
-            p = self.result.protein(self._detail_row.protein_id)
+        pid = self._detail_row.protein_id if self._detail_row else self.protein_combo.currentData()
+        if pid and self.result:
+            p = self.result.protein(pid)
             if p:
                 QGuiApplication.clipboard().setText(f">{p['id']}\n{p['sequence']}\n")
                 self._set_status(f"Secuencia de {p['id']} copiada.")
@@ -708,6 +814,56 @@ class MainWindow(QMainWindow):
         report = self.report or verify_bundle(self.bundle_dir)
         info = {"seconds": self.model.load_seconds, "device": self.model.device} if self.model else None
         PackageDialog(report, info, self).exec()
+
+    def show_preferences(self):
+        devices = available_devices()
+        dialog = PreferencesDialog(devices, self.worker.device, self.worker.chunk_size, self.worker.threads, self)
+        if dialog.exec() != PreferencesDialog.Accepted:
+            return
+        self.worker.configure(dialog.chunk_size, dialog.threads)
+        self.settings.setValue("chunk_size", dialog.chunk_size)
+        self.settings.setValue("threads", dialog.threads or 0)
+        self.settings.setValue("device", dialog.device)
+        if dialog.device != self.worker.device and not self.running:
+            self.model = None
+            self.model_chip.setText("Cargando modelo…")
+            self.model_chip.setProperty("state", "")
+            self._repolish(self.model_chip)
+            self._refresh_state()
+            self.worker.request_reload(dialog.device)
+        self._set_status("Preferencias guardadas.")
+
+    def show_about(self):
+        AboutDialog(self.report, self).exec()
+
+    # --------------------------------------------------------------- preferencias
+    def _restore_settings(self):
+        st = self.settings
+        geometry = st.value("geometry")
+        if geometry is not None:
+            self.restoreGeometry(geometry)
+        splitter = st.value("splitter")
+        if splitter is not None:
+            self.splitter.restoreState(splitter)
+        header = st.value("table_header")
+        if header is not None:
+            self.table.horizontalHeader().restoreState(header)
+        aspects = st.value("aspects")
+        if aspects:
+            chosen = set(aspects if isinstance(aspects, list) else str(aspects).split(","))
+            for a, btn in self.aspect_buttons.items():
+                btn.setChecked(a in chosen)
+        self.specific_check.setChecked(str(st.value("specific_only", "true")).lower() == "true")
+
+    def _save_settings(self):
+        st = self.settings
+        st.setValue("geometry", self.saveGeometry())
+        st.setValue("splitter", self.splitter.saveState())
+        st.setValue("table_header", self.table.horizontalHeader().saveState())
+        st.setValue("aspects", ",".join(a for a, b in self.aspect_buttons.items() if b.isChecked()))
+        st.setValue("specific_only", "true" if self.specific_check.isChecked() else "false")
+        st.setValue("last_dir", str(self.last_dir))
+        st.sync()
 
     # ---------------------------------------------------------------------- estado
     def _refresh_state(self):

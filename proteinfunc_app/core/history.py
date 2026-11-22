@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS runs (
     app_version      TEXT NOT NULL,
     duration_s       REAL,
     message          TEXT,
-    results_gz       BLOB
+    results_gz       BLOB,
+    performance      TEXT
 );
 CREATE INDEX IF NOT EXISTS runs_started ON runs(started_at);
 CREATE INDEX IF NOT EXISTS runs_fingerprint ON runs(model_fingerprint);
@@ -56,6 +57,7 @@ class RunSummary:
     duration_s: float | None
     message: str | None
     has_results: bool
+    performance: dict | None = None
 
     @property
     def status_label(self) -> str:
@@ -68,6 +70,10 @@ class History:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         with self._connect() as con:
             con.executescript(_SCHEMA)
+            # Migración desde 0.1.x: columna de rendimiento.
+            columns = {r[1] for r in con.execute("PRAGMA table_info(runs)")}
+            if "performance" not in columns:
+                con.execute("ALTER TABLE runs ADD COLUMN performance TEXT")
             # Una ejecución que quedó «en curso» se interrumpió (cierre o fallo de la app).
             con.execute("UPDATE runs SET status=?, message=COALESCE(message, ?) WHERE status=?",
                         (FAILED, "Interrumpida: la aplicación se cerró antes de terminar.", RUNNING))
@@ -88,24 +94,26 @@ class History:
             return int(cur.lastrowid)
 
     def finish(self, run_id: int, status: str, duration_s: float | None = None,
-               result: RunResult | None = None, message: str | None = None) -> None:
+               result: RunResult | None = None, message: str | None = None,
+               performance: dict | None = None) -> None:
         if status not in (COMPLETED, CANCELLED, FAILED):
             raise ValueError(f"Estado final no válido: {status}")
         blob = None
         if status == COMPLETED and result is not None:
             blob = gzip.compress(json.dumps(result.to_dict(), ensure_ascii=False).encode("utf-8"))
         with self._connect() as con:
-            con.execute("UPDATE runs SET status=?, finished_at=?, duration_s=?, message=?, results_gz=?"
-                        " WHERE id=?",
+            perf = performance if performance is not None else (result.performance if result else None)
+            con.execute("UPDATE runs SET status=?, finished_at=?, duration_s=?, message=?, results_gz=?,"
+                        " performance=? WHERE id=?",
                         (status, datetime.now().isoformat(timespec="seconds"), duration_s, message, blob,
-                         run_id))
+                         json.dumps(perf) if perf else None, run_id))
 
     def list(self, date_from: str | None = None, date_to: str | None = None,
              fingerprint: str | None = None, status: str | None = None) -> list[RunSummary]:
         """Fechas en formato ISO ``AAAA-MM-DD`` (inclusive)."""
         query = ("SELECT id, started_at, finished_at, status, source_name, proteins, rejected, model_kind,"
                  " model_fingerprint, model_threshold, app_version, duration_s, message,"
-                 " results_gz IS NOT NULL AS has_results FROM runs WHERE 1=1")
+                 " results_gz IS NOT NULL AS has_results, performance FROM runs WHERE 1=1")
         params: list = []
         if date_from:
             query += " AND substr(started_at, 1, 10) >= ?"
@@ -121,7 +129,8 @@ class History:
             params.append(status)
         query += " ORDER BY started_at DESC, id DESC"
         with self._connect() as con:
-            return [RunSummary(**{**dict(r), "has_results": bool(r["has_results"])})
+            return [RunSummary(**{**dict(r), "has_results": bool(r["has_results"]),
+                                  "performance": json.loads(r["performance"]) if r["performance"] else None})
                     for r in con.execute(query, params)]
 
     def fingerprints(self) -> list[tuple[str, str]]:

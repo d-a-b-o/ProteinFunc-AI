@@ -18,6 +18,12 @@ Funciona en **Windows 64 bits y Linux** (Python + PySide6).
 | Exportar **CSV, TSV o JSON** con los filtros visibles y metadatos (versión, huella del modelo, umbral) | RF-09 |
 | Análisis en segundo plano con progreso y **cancelación** (nunca muestra resultados parciales) | RF-10 |
 | **Historial** local en SQLite: filtrar por fecha, versión del modelo y estado; reabrir resultados | RF-11 |
+| **Solo términos específicos** (activo por defecto): oculta ancestros GO generales cuando ya se muestra un término más concreto | UX |
+| **Resumen** por proteína: funciones por aspecto y las principales de cada uno | UX |
+| Aviso de **secuencias atípicas** (baja complejidad o muchos residuos ambiguos) | UX |
+| **Preferencias**: CPU/GPU, tamaño de lote e hilos; se recuerdan ventana, filtros y última carpeta | RNF-05 |
+| **Rendimiento** de cada ejecución en el historial: tiempo, proteínas/s, memoria máxima, dispositivo | RNF-05 |
+| **Acerca de**: cómo interpretar los resultados y licencias de terceros (`THIRD_PARTY_LICENSES.txt` en el instalador) | RNF-10 |
 
 ## Instalación
 
@@ -85,7 +91,7 @@ python -m proteinfunc_app --check examples/muestra.fasta
 3. **Analizar** (Ctrl+Enter). **Esc** cancela.
 4. Filtrar por aspecto, umbral (por defecto el del modelo, 0,45), proteína o texto (Ctrl+F). Seleccionar una fila muestra el detalle: puntaje directo, origen y ancestros GO.
 5. **Exportar** (Ctrl+E) en CSV (UTF-8 con BOM, compatible con Excel), TSV o JSON.
-6. **Historial** (Ctrl+H) para reabrir ejecuciones anteriores. **Paquete del modelo** muestra manifiesto, verificaciones, huellas SHA-256, métricas de validación y versiones.
+6. **Historial** (Ctrl+H) para reabrir ejecuciones anteriores. **Modelo** muestra manifiesto, verificaciones, huellas SHA-256, métricas de validación y versiones. **Preferencias** (Ctrl+,) ajusta dispositivo, lote e hilos. **Acerca de** explica cómo interpretar los resultados.
 
 `examples/muestra.fasta` trae tres proteínas (una se trunca a 512 residuos) y `examples/con_errores.fasta` muestra cómo se reportan los errores.
 
@@ -109,6 +115,7 @@ examples/                  # FASTA de ejemplo
 tests/                     # pytest (usa el modelo real)
 tools/make_checksums.py    # Regenera model/SHA256SUMS
 tools/make_icon.py         # Genera el icono
+tools/make_licenses.py     # Genera THIRD_PARTY_LICENSES.txt (CI)
 installer/                 # Inno Setup (Windows), install.sh (Linux), notas del release
 .github/workflows/         # Compilación y publicación del release
 proteinfunc.spec           # PyInstaller

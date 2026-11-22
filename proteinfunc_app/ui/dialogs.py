@@ -7,7 +7,8 @@ from pathlib import Path
 
 from PySide6.QtCore import QDate, Qt
 from PySide6.QtGui import QColor, QGuiApplication
-from PySide6.QtWidgets import (QAbstractItemView, QButtonGroup, QCheckBox, QComboBox, QDateEdit,
+from PySide6.QtWidgets import (QAbstractItemView, QButtonGroup, QCheckBox, QComboBox, QDateEdit, QSpinBox,
+                               QPlainTextEdit, QFormLayout,
                                QDialog, QDialogButtonBox, QFileDialog, QGridLayout, QHBoxLayout,
                                QHeaderView, QLabel, QMessageBox, QPushButton, QRadioButton,
                                QTableWidget, QTableWidgetItem, QTabWidget, QVBoxLayout, QWidget)
@@ -15,7 +16,10 @@ from PySide6.QtWidgets import (QAbstractItemView, QButtonGroup, QCheckBox, QComb
 from ..core.history import COMPLETED, STATUS_LABELS, History, RunSummary
 from ..core.integrity import IntegrityReport
 from ..core.results import ViewFilter
+from .. import APP_NAME, __version__
+from ..core.perf import cpu_count
 from ..core.validation import ERROR, WARNING, ValidationReport
+from ..paths import resource_root
 from . import theme
 from .widgets import Banner, Card, hbox, muted, section_label
 
@@ -286,8 +290,8 @@ class HistoryDialog(QDialog):
                        self.status, None)
         layout.addWidget(filters)
 
-        self.table = _table(["Fecha", "Origen", "Proteínas", "Estado", "Duración", "Modelo", "Umbral",
-                             "App", "Mensaje"])
+        self.table = _table(["Fecha", "Origen", "Proteínas", "Estado", "Duración", "Proteínas/s",
+                             "Memoria máx.", "Dispositivo", "Modelo", "Umbral", "App", "Mensaje"])
         self.table.setSelectionMode(QAbstractItemView.SingleSelection)
         self.table.doubleClicked.connect(self._open)
         self.table.itemSelectionChanged.connect(self._update_buttons)
@@ -336,12 +340,23 @@ class HistoryDialog(QDialog):
             self.table.setItem(i, 1, _item(r.source_name))
             self.table.setItem(i, 2, _item(r.proteins if not r.rejected else f"{r.proteins} (+{r.rejected} rech.)"))
             self.table.setItem(i, 3, _item(r.status_label, colors.get(r.status)))
+            perf = r.performance or {}
             self.table.setItem(i, 4, _item("—" if r.duration_s is None else f"{r.duration_s:.1f} s"))
-            self.table.setItem(i, 5, _item(f"{r.model_kind} · {r.model_fingerprint[:12]}",
+            pps = perf.get("proteins_per_second")
+            mem = perf.get("peak_memory_mb")
+            self.table.setItem(i, 5, _item("—" if pps is None else theme.num(pps, 1)))
+            self.table.setItem(i, 6, _item("—" if mem is None else f"{mem:.0f} MB",
+                                           tooltip="Memoria residente máxima del proceso"))
+            device = perf.get("device")
+            self.table.setItem(i, 7, _item("—" if not device else
+                                           f"{'GPU' if str(device).startswith('cuda') else 'CPU'}"
+                                           + (f" · {perf['threads']} hilos" if perf.get("threads") else "")
+                                           + (f" · lote {perf['chunk_size']}" if perf.get("chunk_size") else "")))
+            self.table.setItem(i, 8, _item(f"{r.model_kind} · {r.model_fingerprint[:12]}",
                                            tooltip=r.model_fingerprint))
-            self.table.setItem(i, 6, _item(r.model_threshold))
-            self.table.setItem(i, 7, _item(r.app_version))
-            self.table.setItem(i, 8, _item(r.message or ""))
+            self.table.setItem(i, 9, _item(r.model_threshold))
+            self.table.setItem(i, 10, _item(r.app_version))
+            self.table.setItem(i, 11, _item(r.message or ""))
         self.table.resizeColumnsToContents()
         self._update_buttons()
 
@@ -405,6 +420,8 @@ class ExportDialog(QDialog):
 
         aspects = ", ".join(view.aspects) or "ninguno"
         protein = view.protein_id or "todas las proteínas"
+        if view.specific_only:
+            protein += ", solo términos específicos"
         layout.addWidget(muted(
             f"Se exportan los resultados visibles: umbral ≥ {theme.num(view.threshold, 2)}, aspectos {aspects}, "
             f"{protein}. {n_rows} fila(s); {n_empty} proteína(s) sin funciones sobre el umbral se "
@@ -432,3 +449,147 @@ class ExportDialog(QDialog):
             path = path.with_name(path.name + f".{self.fmt}")
         self.path = path
         self.accept()
+
+
+# --------------------------------------------------------------------------- preferencias
+class PreferencesDialog(QDialog):
+    """Dispositivo, tamaño de lote e hilos (límites configurables del documento, RNF-05)."""
+
+    def __init__(self, devices: list[tuple[str, str]], device: str, chunk_size: int, threads: int | None,
+                 parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Preferencias")
+        self.setMinimumSize(580, 460)
+        layout = QVBoxLayout(self)
+        form = QFormLayout()
+        form.setHorizontalSpacing(16)
+        form.setVerticalSpacing(10)
+
+        self.device_combo = QComboBox()
+        for key, label in devices:
+            self.device_combo.addItem(label, key)
+        index = self.device_combo.findData(device)
+        self.device_combo.setCurrentIndex(max(0, index))
+        form.addRow("Dispositivo", self.device_combo)
+        if len(devices) == 1:
+            form.addRow("", muted("No se detectó una GPU compatible (CUDA). La CPU es suficiente para este modelo."))
+
+        self.chunk_spin = QSpinBox()
+        self.chunk_spin.setRange(1, 64)
+        self.chunk_spin.setValue(int(chunk_size))
+        self.chunk_spin.setSuffix(" proteínas")
+        form.addRow("Tamaño de lote", self.chunk_spin)
+        form.addRow("", muted("Proteínas procesadas juntas. Lotes menores usan menos memoria y permiten "
+                              "cancelar antes; lotes mayores pueden ser algo más rápidos."))
+
+        self.threads_spin = QSpinBox()
+        self.threads_spin.setRange(0, cpu_count())
+        self.threads_spin.setValue(int(threads or 0))
+        self.threads_spin.setSpecialValueText("Automático")
+        form.addRow("Hilos de CPU", self.threads_spin)
+        form.addRow("", muted(f"Este equipo tiene {cpu_count()} núcleos lógicos. Reduce el número si "
+                              "quieres seguir usando el equipo con fluidez durante el análisis."))
+        layout.addLayout(form)
+        layout.addWidget(muted("La longitud máxima (residuos) y el umbral los fija el modelo entrenado; "
+                               "cambiarlos rompería la consistencia con el notebook."))
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Save | QDialogButtonBox.Cancel)
+        buttons.button(QDialogButtonBox.Save).setText("Guardar")
+        buttons.button(QDialogButtonBox.Cancel).setText("Cancelar")
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    @property
+    def device(self) -> str:
+        return self.device_combo.currentData()
+
+    @property
+    def chunk_size(self) -> int:
+        return self.chunk_spin.value()
+
+    @property
+    def threads(self) -> int | None:
+        return self.threads_spin.value() or None
+
+
+# ------------------------------------------------------------------------------ acerca de
+COMPONENTS = [
+    ("PySide6 (Qt for Python)", "PySide6", "LGPL-3.0"),
+    ("PyTorch", "torch", "BSD-3-Clause"),
+    ("Transformers (Hugging Face)", "transformers", "Apache-2.0"),
+    ("safetensors", "safetensors", "Apache-2.0"),
+    ("NumPy", "numpy", "BSD-3-Clause"),
+    ("ESM-2 esm2_t6_8M_UR50D (Meta AI)", None, "MIT"),
+    ("Gene Ontology (nombres y relaciones de términos)", None, "CC BY 4.0"),
+    ("Python", None, "PSF-2.0"),
+]
+
+
+class AboutDialog(QDialog):
+    """Versión, cómo interpretar los resultados y licencias de terceros (RNF-10)."""
+
+    def __init__(self, report=None, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(f"Acerca de {APP_NAME}")
+        self.resize(760, 560)
+        layout = QVBoxLayout(self)
+        title = QLabel(f"<b style='font-size:14pt'>{APP_NAME}</b> &nbsp; versión {__version__}")
+        layout.addWidget(title)
+        layout.addWidget(muted("Predicción local de funciones Gene Ontology (MF, BP, CC) a partir de secuencias de "
+                               "proteínas. Proyecto del curso de Bioinformática, USIL."))
+        if report is not None:
+            layout.addWidget(muted(f"Huella del modelo (SHA-256): {report.fingerprint}"))
+
+        tabs = QTabWidget()
+        layout.addWidget(tabs, 1)
+
+        guide = QLabel(
+            "<p><b>MF</b> Función molecular · <b>BP</b> Proceso biológico · <b>CC</b> Componente celular. "
+            "Una proteína puede tener varias funciones en cada aspecto.</p>"
+            "<p><b>Puntuación</b>: salida sigmoid del modelo por término, ajustada por la jerarquía GO. "
+            "<b>No es una probabilidad calibrada</b>: 0,80 no significa 80 % de certeza.</p>"
+            "<p><b>Directo / Propagado</b>: un término propagado hereda el puntaje de un término más "
+            "específico (relaciones <i>is_a</i> y <i>part_of</i>). «Solo términos específicos» oculta esos "
+            "términos generales cuando ya se muestra uno más concreto.</p>"
+            "<p><b>Umbral</b>: por defecto el elegido en validación. «Ninguna función superó el umbral» no "
+            "implica que la proteína carezca de función.</p>"
+            "<p><b>Límites</b>: solo se predicen los términos del vocabulario entrenado; las secuencias "
+            "largas se truncan; el modelo asigna funciones incluso a secuencias sin sentido biológico "
+            "(la app avisa de las de baja complejidad). Las predicciones son hipótesis computacionales "
+            "y no sustituyen la validación experimental.</p>")
+        guide.setWordWrap(True)
+        guide.setTextFormat(Qt.RichText)
+        guide.setAlignment(Qt.AlignTop)
+        guide_box = QWidget()
+        gl = QVBoxLayout(guide_box)
+        gl.addWidget(guide)
+        gl.addStretch(1)
+        tabs.addTab(guide_box, "Cómo interpretar")
+
+        comp = _table(["Componente", "Licencia", "Versión instalada"])
+        comp.setRowCount(len(COMPONENTS))
+        for i, (name, dist, license_) in enumerate(COMPONENTS):
+            comp.setItem(i, 0, _item(name))
+            comp.setItem(i, 1, _item(license_))
+            comp.setItem(i, 2, _item((_installed(dist) or "—") if dist else "—"))
+        comp.resizeColumnsToContents()
+        comp_box = QWidget()
+        cl = QVBoxLayout(comp_box)
+        cl.addWidget(comp)
+        cl.addWidget(muted("PySide6 se distribuye bajo LGPL-3.0 como librerías dinámicas reemplazables, junto "
+                           "a la aplicación. Revisa las reglas de la competencia CAFA 6 (Kaggle) antes de "
+                           "redistribuir artefactos derivados de sus datos."))
+        tabs.addTab(comp_box, "Componentes y licencias")
+
+        full = resource_root() / "THIRD_PARTY_LICENSES.txt"
+        if full.is_file():
+            text = QPlainTextEdit()
+            text.setReadOnly(True)
+            text.setPlainText(full.read_text(encoding="utf-8", errors="replace"))
+            tabs.addTab(text, "Textos completos")
+
+        close = QDialogButtonBox(QDialogButtonBox.Close)
+        close.button(QDialogButtonBox.Close).setText("Cerrar")
+        close.rejected.connect(self.reject)
+        layout.addWidget(close)

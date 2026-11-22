@@ -49,3 +49,18 @@ def test_reads_latin1_files(tmp_path):
     path = tmp_path / "acentos.fasta"
     path.write_bytes(">proteína_ñ\nMKT\n".encode("latin-1"))
     assert validate_text(read_input_file(path), 512).records[0].record_id == "proteína_ñ"
+
+
+def test_text_before_first_header_is_clear_error():
+    report = validate_text("MKTAYIAKQR\n>a\nMKT\n", 512)
+    assert report.global_errors and "antes de la primera cabecera" in report.global_errors[0]
+
+
+def test_low_complexity_is_warning_but_real_proteins_are_not():
+    from proteinfunc_app.core.validation import complexity_warning
+
+    report = validate_text(">poliG\n" + "G" * 50, 512)
+    assert report.records[0].status == WARNING and report.records[0].accepted
+    assert complexity_warning("X" * 30 + "MKTAYIAKQR") is not None
+    for record in validate_text(read_input_file(EXAMPLES / "muestra.fasta"), None).records:
+        assert complexity_warning(record.sequence) is None, record.record_id
