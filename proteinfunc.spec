@@ -13,7 +13,9 @@ import sys
 from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
 hiddenimports = collect_submodules("transformers.models.esm") + ["transformers.models.bert"]
-datas = [("model", "model"), ("examples", "examples"),
+# Del directorio examples/ solo se empaqueta muestra.fasta (la usa proteinfunc-check);
+# los FASTA de prueba (examples/pruebas) quedan solo en el repositorio.
+datas = [("model", "model"), ("examples/muestra.fasta", "examples"),
          ("proteinfunc_app/icon.png", "proteinfunc_app")]
 datas += collect_data_files("transformers", include_py_files=False)
 if os.path.isfile("THIRD_PARTY_LICENSES.txt"):  # Generado por tools/make_licenses.py (CI).

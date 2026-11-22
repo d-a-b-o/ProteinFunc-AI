@@ -1,6 +1,6 @@
 # FASTA de prueba
 
-Archivos para probar la aplicación. Se abren con **Cargar FASTA** o arrastrándolos a la ventana; `02` se pega en el cuadro de texto.
+Archivos para probar la aplicación. Están solo en el repositorio; el instalador no los incluye. Se abren con **Cargar FASTA** o arrastrándolos a la ventana; `02` se pega en el cuadro de texto.
 
 | Archivo | Contenido | Resultado esperado |
 |---|---|---|

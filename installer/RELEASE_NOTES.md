@@ -30,7 +30,7 @@ Se instala para tu usuario (sin `sudo`) y aparece en el menú de aplicaciones. S
 
 - **Rechazo de ADN/ARN**: si cargas una secuencia de nucleótidos (solo A, C, G, T/U), la aplicación la rechaza con un mensaje que pide traducirla a proteína. Antes se aceptaba como «proteína» y el modelo le asignaba funciones sin sentido.
 - **Aviso de baja complejidad más claro**: indica la causa real (residuo dominante o poca diversidad de aminoácidos).
-- **FASTA de prueba incluidos** en `examples/pruebas/` (dentro de la carpeta de instalación), con una guía del resultado esperado.
+- **FASTA de prueba** en el repositorio (`examples/pruebas/`), con una guía del resultado esperado. No se incluyen en el instalador.
 
 Incluye también todo lo de la 0.2.0: solo términos específicos, resumen por proteína, aviso de secuencias atípicas, Preferencias, rendimiento en el historial y licencias de terceros.
 
