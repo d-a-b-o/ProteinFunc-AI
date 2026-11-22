@@ -28,13 +28,11 @@ Se instala para tu usuario (sin `sudo`) y aparece en el menú de aplicaciones. S
 
 ## Novedades de esta versión
 
-- **Solo términos específicos** (activo por defecto): la tabla oculta los términos GO generales cuando ya hay uno más concreto.
-- **Resumen** por proteína en el panel derecho: funciones por aspecto y las principales.
-- **Aviso de secuencias atípicas** (baja complejidad, muchos residuos ambiguos).
-- **Preferencias**: CPU/GPU, tamaño de lote e hilos. La app recuerda ventana, filtros y última carpeta.
-- **Rendimiento** de cada análisis en el historial (tiempo, proteínas/s, memoria máxima).
-- **Acerca de**: guía de interpretación y licencias de terceros.
-- Linux: `install.sh` ya no muestra avisos falsos de librerías faltantes.
+- **Rechazo de ADN/ARN**: si cargas una secuencia de nucleótidos (solo A, C, G, T/U), la aplicación la rechaza con un mensaje que pide traducirla a proteína. Antes se aceptaba como «proteína» y el modelo le asignaba funciones sin sentido.
+- **Aviso de baja complejidad más claro**: indica la causa real (residuo dominante o poca diversidad de aminoácidos).
+- **FASTA de prueba incluidos** en `examples/pruebas/` (dentro de la carpeta de instalación), con una guía del resultado esperado.
+
+Incluye también todo lo de la 0.2.0: solo términos específicos, resumen por proteína, aviso de secuencias atípicas, Preferencias, rendimiento en el historial y licencias de terceros.
 
 ## Uso
 
