@@ -48,15 +48,21 @@ DESKTOP
 command -v update-desktop-database >/dev/null && update-desktop-database "$APPS" >/dev/null 2>&1 || true
 
 # Librerías gráficas del sistema que Qt necesita y no se pueden incluir en el paquete.
+# Se lee la caché una sola vez: con «ldconfig -p | grep -q» y pipefail, grep cierra la
+# tubería al encontrar la librería, ldconfig recibe SIGPIPE y daba falsos «faltantes».
 missing=()
-for lib in libEGL.so.1 libGL.so.1 libxkbcommon.so.0 libxkbcommon-x11.so.0 libxcb-cursor.so.0 libfontconfig.so.1; do
-    ldconfig -p 2>/dev/null | grep -q "$lib" || missing+=("$lib")
-done
+cache="$( (ldconfig -p || /sbin/ldconfig -p) 2>/dev/null || true)"
+if [[ -n "$cache" ]]; then
+    for lib in libEGL.so.1 libGL.so.1 libxkbcommon.so.0 libxkbcommon-x11.so.0 libxcb-cursor.so.0 libfontconfig.so.1; do
+        grep -qF "$lib" <<<"$cache" || missing+=("$lib")
+    done
+fi
 if (( ${#missing[@]} )); then
     echo
     echo "Aviso: faltan librerías del sistema: ${missing[*]}"
     echo "  Debian/Ubuntu: sudo apt install libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libfontconfig1"
     echo "  Fedora:        sudo dnf install mesa-libEGL mesa-libGL libxkbcommon-x11 xcb-util-cursor fontconfig"
+    echo "  Arch:          sudo pacman -S --needed mesa libxkbcommon-x11 xcb-util-cursor fontconfig"
 fi
 
 echo

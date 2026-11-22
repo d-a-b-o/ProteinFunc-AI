@@ -22,6 +22,7 @@ os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
 from PySide6.QtCore import QThread, Signal  # noqa: E402
 
 from .core.integrity import IntegrityReport, verify_bundle  # noqa: E402
+from .core.perf import peak_memory_mb  # noqa: E402
 from .core.results import SCORE_FLOOR  # noqa: E402
 
 CHUNK_SIZE = 8  # Proteínas por bloque entre comprobaciones de cancelación.
@@ -79,15 +80,16 @@ def load_predictor(bundle_dir: Path, device: str = "cpu") -> LoadedModel:
 
 
 def run_prediction(predictor, records, cancel: threading.Event | None = None,
-                   progress=None, chunk_size: int = CHUNK_SIZE):
+                   progress=None, chunk_size: int = CHUNK_SIZE, batch_size: int | None = None):
     """Ejecuta ``predict_records`` por bloques. Devuelve None si se canceló."""
+    batch_size = batch_size or chunk_size
     results = []
     total = len(records)
     for start in range(0, total, chunk_size):
         if cancel is not None and cancel.is_set():
             return None
         results.extend(predictor.predict_records(records[start:start + chunk_size],
-                                                 threshold=SCORE_FLOOR))
+                                                 threshold=SCORE_FLOOR, batch_size=batch_size))
         if progress is not None:
             progress(min(start + chunk_size, total), total)
     if cancel is not None and cancel.is_set():
@@ -109,7 +111,7 @@ class InferenceWorker(QThread):
     loaded = Signal(object)            # LoadedModel
     load_failed = Signal(str, object)  # mensaje, IntegrityReport | None
     progress = Signal(int, int)        # hechas, total
-    finished = Signal(object, float)   # lista de resultados, segundos
+    finished = Signal(object, object)  # lista de resultados, rendimiento (dict)
     cancelled = Signal()
     failed = Signal(str)
 
@@ -122,10 +124,20 @@ class InferenceWorker(QThread):
         self.load_count = 0
         self._cancel = threading.Event()
         self._jobs: queue.Queue = queue.Queue()
+        self.chunk_size = CHUNK_SIZE
+        self.threads: int | None = None  # None = valor por defecto de PyTorch.
 
     # --- API para el hilo gráfico (no bloqueante)
     def request_load(self) -> None:
         self._jobs.put(("load", None))
+
+    def request_reload(self, device: str) -> None:
+        """Cambiar de dispositivo (CPU/GPU) vuelve a cargar el modelo."""
+        self._jobs.put(("reload", device))
+
+    def configure(self, chunk_size: int, threads: int | None) -> None:
+        self.chunk_size = max(1, int(chunk_size))
+        self.threads = threads
 
     def request_predict(self, records) -> None:
         self._cancel.clear()
@@ -146,6 +158,10 @@ class InferenceWorker(QThread):
             if kind == "stop":
                 return
             if kind == "load":
+                self._load()
+            elif kind == "reload":
+                self.device = payload
+                self.model = None
                 self._load()
             elif kind == "predict":
                 self._predict(payload)
@@ -172,8 +188,13 @@ class InferenceWorker(QThread):
             return
         start = time.perf_counter()
         try:
+            if self.threads:
+                import torch
+
+                torch.set_num_threads(self.threads)
             results = run_prediction(self.model.predictor, records, self._cancel,
-                                     lambda done, total: self.progress.emit(done, total))
+                                     lambda done, total: self.progress.emit(done, total),
+                                     chunk_size=self.chunk_size)
         except MemoryError:
             self.failed.emit("Memoria insuficiente. Prueba con menos proteínas por archivo.")
             return
@@ -189,4 +210,31 @@ class InferenceWorker(QThread):
         if results is None:
             self.cancelled.emit()
         else:
-            self.finished.emit(results, time.perf_counter() - start)
+            import torch
+
+            seconds = time.perf_counter() - start
+            residues = sum(r["residues_used"] for r in results)
+            self.finished.emit(results, {
+                "seconds": round(seconds, 3),
+                "proteins": len(results),
+                "residues_used": residues,
+                "proteins_per_second": round(len(results) / seconds, 2) if seconds else None,
+                "peak_memory_mb": round(peak_memory_mb() or 0, 1) or None,
+                "device": self.device,
+                "threads": torch.get_num_threads(),
+                "chunk_size": self.chunk_size,
+                "model_load_seconds": round(self.model.load_seconds, 2),
+            })
+
+
+def available_devices() -> list[tuple[str, str]]:
+    """Dispositivos utilizables: [(clave, etiqueta)]. La GPU es opcional (CUDA)."""
+    devices = [("cpu", "CPU")]
+    try:
+        import torch
+
+        if torch.cuda.is_available():
+            devices.append(("cuda", f"GPU · {torch.cuda.get_device_name(0)}"))
+    except Exception:  # noqa: BLE001
+        pass
+    return devices

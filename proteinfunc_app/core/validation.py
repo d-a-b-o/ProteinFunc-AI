@@ -89,6 +89,34 @@ class ValidationReport:
         return [(r.record_id, r.sequence) for r in self.accepted]
 
 
+def complexity_warning(sequence: str) -> str | None:
+    """Detecta secuencias atípicas para las que el modelo igual asignará funciones.
+
+    Criterios simples y conservadores (no prueban que la secuencia sea biológica):
+    - entropía de Shannon de la composición < 2,5 bits (proteínas naturales: ~4,0-4,2);
+    - un mismo residuo ocupa más del 40 % de la secuencia;
+    - más del 20 % de residuos ambiguos (X, B, Z, J).
+    Se omite en secuencias muy cortas (< 20 aa), donde la entropía no es informativa.
+    """
+    n = len(sequence)
+    if n < 20:
+        return None
+    counts = {}
+    for aa in sequence:
+        counts[aa] = counts.get(aa, 0) + 1
+    import math
+
+    entropy = -sum(c / n * math.log2(c / n) for c in counts.values())
+    top_aa, top = max(counts.items(), key=lambda kv: kv[1])
+    ambiguous = sum(counts.get(a, 0) for a in "XBZJ") / n
+    if ambiguous > 0.2:
+        return f"Secuencia atípica: {ambiguous:.0%} de residuos ambiguos (X/B/Z/J); los resultados son poco fiables."
+    if top / n > 0.4 or entropy < 2.5:
+        return (f"Secuencia de baja complejidad ({top_aa} = {top / n:.0%} de los residuos); "
+                "el modelo asigna funciones igualmente, pero los resultados son poco fiables.")
+    return None
+
+
 def _check_sequence(check: RecordCheck, max_length: int | None) -> None:
     if not check.sequence:
         check.status = ERROR
@@ -106,6 +134,10 @@ def _check_sequence(check: RecordCheck, max_length: int | None) -> None:
         check.status = WARNING
         check.messages.append(
             f"Secuencia de {check.length} residuos: el modelo usará solo los primeros {max_length}.")
+    atypical = complexity_warning(check.sequence)
+    if atypical:
+        check.status = WARNING
+        check.messages.append(atypical)
 
 
 def validate_text(text: str, max_length: int | None = None) -> ValidationReport:
@@ -114,6 +146,12 @@ def validate_text(text: str, max_length: int | None = None) -> ValidationReport:
         return ValidationReport([], ["La entrada está vacía: carga un FASTA o pega una secuencia."], max_length)
 
     lines = text.splitlines()
+    first_header = next((i for i, l in enumerate(lines, start=1) if l.strip().startswith(">")), None)
+    if not text.lstrip().startswith(">") and first_header is not None:
+        return ValidationReport([], [
+            f"FASTA inválido: hay texto antes de la primera cabecera «>» (línea {first_header}). "
+            "Cada secuencia debe ir debajo de su cabecera, o pega una sola secuencia sin cabeceras."],
+            max_length)
     if not text.lstrip().startswith(">"):
         check = RecordCheck(1, 1, "query_1", "query_1", clean_sequence(text))
         _check_sequence(check, max_length)

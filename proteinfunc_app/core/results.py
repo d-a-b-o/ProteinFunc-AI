@@ -45,6 +45,7 @@ class ViewFilter:
     aspects: tuple[str, ...] = ALL_ASPECTS
     protein_id: str | None = None      # None = todas.
     include_propagated: bool = True
+    specific_only: bool = False        # Ocultar ancestros de otro término visible.
 
     def accepts(self, prediction: dict) -> bool:
         return (prediction["score"] >= self.threshold
@@ -54,7 +55,8 @@ class ViewFilter:
     def describe(self) -> dict:
         return {"threshold": round(self.threshold, 4), "aspects": list(self.aspects),
                 "protein": self.protein_id or "todas",
-                "include_propagated": self.include_propagated}
+                "include_propagated": self.include_propagated,
+                "specific_only": self.specific_only}
 
 
 @dataclass
@@ -70,6 +72,10 @@ class RunResult:
     finished_at: str | None = None
     rejected: list[dict] = field(default_factory=list)  # Registros excluidos por validación.
     app_version: str = __version__
+    # Ancestros GO de cada término del vocabulario (del manifiesto), para «solo específicos».
+    ancestors: dict[str, list[str]] = field(default_factory=dict)
+    # Rendimiento de la ejecución (RNF-05): segundos, memoria máxima, dispositivo, lote…
+    performance: dict = field(default_factory=dict)
 
     # ----- consulta -----
     def protein_ids(self) -> list[str]:
@@ -78,17 +84,27 @@ class RunResult:
     def protein(self, protein_id: str) -> dict | None:
         return next((p for p in self.proteins if p["id"] == protein_id), None)
 
+    def visible_predictions(self, protein: dict, view: ViewFilter) -> list[dict]:
+        """Predicciones de una proteína que pasan el filtro. Con ``specific_only`` se
+        oculta todo término que sea ancestro de otro término visible de la misma proteína."""
+        preds = [x for x in protein["predictions"] if view.accepts(x)]
+        if view.specific_only and self.ancestors:
+            covered = set()
+            for x in preds:
+                covered.update(self.ancestors.get(x["go_term"], ()))
+            preds = [x for x in preds if x["go_term"] not in covered]
+        return preds
+
     def rows(self, view: ViewFilter) -> list[Row]:
         out = []
         for p in self.proteins:
             if view.protein_id and p["id"] != view.protein_id:
                 continue
-            for pred in p["predictions"]:
-                if view.accepts(pred):
-                    out.append(Row(p["id"], pred["go_term"], pred["name"], pred["aspect"],
-                                   float(pred["score"]), float(pred.get("direct_score", pred["score"])),
-                                   pred.get("origin", "direct"), int(p["length"]),
-                                   int(p["residues_used"]), bool(p["truncated"])))
+            for pred in self.visible_predictions(p, view):
+                out.append(Row(p["id"], pred["go_term"], pred["name"], pred["aspect"],
+                           float(pred["score"]), float(pred.get("direct_score", pred["score"])),
+                           pred.get("origin", "direct"), int(p["length"]),
+                           int(p["residues_used"]), bool(p["truncated"])))
         return out
 
     def all_rows(self) -> list[Row]:
@@ -98,6 +114,19 @@ class RunResult:
         return [p["id"] for p in self.proteins
                 if (not view.protein_id or p["id"] == view.protein_id)
                 and not any(view.accepts(x) for x in p["predictions"])]
+
+    def summary(self, view: ViewFilter, top: int = 3) -> list[dict]:
+        """Resumen por proteína: funciones por aspecto y las principales de cada uno."""
+        out = []
+        for p in self.proteins:
+            if view.protein_id and p["id"] != view.protein_id:
+                continue
+            preds = self.visible_predictions(p, view)
+            by_aspect = {a: [x for x in preds if x["aspect"] == a] for a in ALL_ASPECTS}
+            out.append({"id": p["id"], "length": p["length"], "truncated": p["truncated"],
+                        "counts": {a: len(v) for a, v in by_aspect.items()},
+                        "top": {a: sorted(v, key=lambda x: -x["score"])[:top] for a, v in by_aspect.items()}})
+        return out
 
     def truncated_proteins(self) -> list[dict]:
         return [p for p in self.proteins if p["truncated"]]
@@ -118,6 +147,7 @@ class RunResult:
             "filter": view.describe(),
             "proteins_analyzed": len(self.proteins),
             "records_rejected": len(self.rejected),
+            "performance": self.performance,
             "note": SCORE_NOTE,
         }
 
@@ -129,7 +159,7 @@ class RunResult:
         for p in self.proteins:
             if view.protein_id and p["id"] != view.protein_id:
                 continue
-            preds = [dict(x) for x in p["predictions"] if view.accepts(x)]
+            preds = [dict(x) for x in self.visible_predictions(p, view)]
             item = {k: p[k] for k in ("id", "sequence", "length", "residues_used", "truncated")}
             item.update(threshold=float(view.threshold), predictions=preds,
                         status="ok" if preds else "no_terms_above_threshold")
@@ -177,4 +207,5 @@ class RunResult:
 
     @classmethod
     def from_dict(cls, data: dict) -> "RunResult":
-        return cls(**data)
+        known = {f for f in cls.__dataclass_fields__}
+        return cls(**{k: v for k, v in data.items() if k in known})

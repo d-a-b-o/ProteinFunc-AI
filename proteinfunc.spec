@@ -7,6 +7,7 @@
 # Genera dos ejecutables que comparten las librerías:
 #   ProteinFuncAI        aplicación gráfica (sin consola en Windows)
 #   proteinfunc-check    verificación por consola: paquete + predicción de ejemplo
+import os
 import sys
 
 from PyInstaller.utils.hooks import collect_data_files, collect_submodules
@@ -15,6 +16,8 @@ hiddenimports = collect_submodules("transformers.models.esm") + ["transformers.m
 datas = [("model", "model"), ("examples", "examples"),
          ("proteinfunc_app/icon.png", "proteinfunc_app")]
 datas += collect_data_files("transformers", include_py_files=False)
+if os.path.isfile("THIRD_PARTY_LICENSES.txt"):  # Generado por tools/make_licenses.py (CI).
+    datas.append(("THIRD_PARTY_LICENSES.txt", "."))
 icon = "installer/icon.ico" if sys.platform == "win32" else None
 
 a = Analysis(

@@ -24,7 +24,17 @@ cd ProteinFuncAI-VERSION-linux-x86_64
 ./install.sh
 ```
 
-Se instala para tu usuario (sin `sudo`) y aparece en el menú de aplicaciones. Si el instalador avisa de librerías faltantes, en Debian/Ubuntu: `sudo apt install libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libfontconfig1`. Para desinstalar: `./install.sh --uninstall`.
+Se instala para tu usuario (sin `sudo`) y aparece en el menú de aplicaciones. Si el instalador avisa de librerías faltantes, en Debian/Ubuntu: `sudo apt install libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libfontconfig1`; en Arch: `sudo pacman -S --needed mesa libxkbcommon-x11 xcb-util-cursor fontconfig`. Para desinstalar: `./install.sh --uninstall`.
+
+## Novedades de esta versión
+
+- **Solo términos específicos** (activo por defecto): la tabla oculta los términos GO generales cuando ya hay uno más concreto.
+- **Resumen** por proteína en el panel derecho: funciones por aspecto y las principales.
+- **Aviso de secuencias atípicas** (baja complejidad, muchos residuos ambiguos).
+- **Preferencias**: CPU/GPU, tamaño de lote e hilos. La app recuerda ventana, filtros y última carpeta.
+- **Rendimiento** de cada análisis en el historial (tiempo, proteínas/s, memoria máxima).
+- **Acerca de**: guía de interpretación y licencias de terceros.
+- Linux: `install.sh` ya no muestra avisos falsos de librerías faltantes.
 
 ## Uso
 

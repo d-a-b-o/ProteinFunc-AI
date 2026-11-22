@@ -18,7 +18,8 @@ PROTEINS = [
 
 def make_result():
     return RunResult("prueba.fasta", ">proteína_á\nMKT\n>P2\n" + "M" * 600, [dict(p) for p in PROTEINS],
-                     "esm2", 0.45, 512, "f" * 64)
+                     "esm2", 0.45, 512, "f" * 64, ancestors={"GO:1": [], "GO:2": ["GO:9"], "GO:3": []},
+                     performance={"seconds": 1.0, "peak_memory_mb": 100.0})
 
 
 def test_filters():
@@ -78,3 +79,53 @@ def test_history_lifecycle(tmp_path):
     assert reopened.load(cancelled) is None
     reopened.delete(run)
     assert len(reopened.list()) == 2
+
+
+def test_specific_only_hides_visible_ancestors():
+    proteins = [{"id": "p", "sequence": "MKT", "length": 3, "residues_used": 3, "truncated": False,
+                 "predictions": [
+                     {"go_term": "GO:A", "name": "general", "aspect": "MF", "score": 0.9, "direct_score": 0.5, "origin": "propagated"},
+                     {"go_term": "GO:B", "name": "intermedio", "aspect": "MF", "score": 0.9, "direct_score": 0.6, "origin": "propagated"},
+                     {"go_term": "GO:C", "name": "específico", "aspect": "MF", "score": 0.9, "direct_score": 0.9, "origin": "direct"},
+                     {"go_term": "GO:D", "name": "otro", "aspect": "MF", "score": 0.5, "direct_score": 0.5, "origin": "direct"}]}]
+    r = RunResult("x", "", proteins, "esm2", 0.45, 512, "f" * 64,
+                  ancestors={"GO:A": [], "GO:B": ["GO:A"], "GO:C": ["GO:B", "GO:A"], "GO:D": ["GO:A"]})
+    assert [x.go_term for x in r.rows(ViewFilter(0.45, specific_only=True))] == ["GO:C", "GO:D"]
+    # Si el término específico queda bajo el umbral, su ancestro vuelve a mostrarse.
+    assert [x.go_term for x in r.rows(ViewFilter(0.95, specific_only=True))] == []
+    summary = r.summary(ViewFilter(0.45, specific_only=True))[0]
+    assert summary["counts"] == {"MF": 2, "BP": 0, "CC": 0}
+    assert [t["go_term"] for t in summary["top"]["MF"]] == ["GO:C", "GO:D"]
+
+
+def test_history_migrates_v01_database(tmp_path):
+    import sqlite3
+
+    db = tmp_path / "viejo.sqlite3"
+    con = sqlite3.connect(db)
+    con.execute("CREATE TABLE runs (id INTEGER PRIMARY KEY AUTOINCREMENT, started_at TEXT NOT NULL,"
+                " finished_at TEXT, status TEXT NOT NULL, source_name TEXT NOT NULL, proteins INTEGER NOT NULL,"
+                " rejected INTEGER NOT NULL DEFAULT 0, model_kind TEXT NOT NULL, model_fingerprint TEXT NOT NULL,"
+                " model_threshold REAL NOT NULL, app_version TEXT NOT NULL, duration_s REAL, message TEXT,"
+                " results_gz BLOB)")
+    con.execute("INSERT INTO runs (started_at, status, source_name, proteins, model_kind, model_fingerprint,"
+                " model_threshold, app_version) VALUES ('2026-11-21T10:00:00','cancelado','a.fasta',1,'esm2','f',0.45,'0.1.0')")
+    con.commit()
+    con.close()
+    h = History(db)
+    assert h.list()[0].performance is None
+    run = h.start("b.fasta", 1, 0, "esm2", "f", 0.45, "0.2.0")
+    h.finish(run, COMPLETED, 1.0, make_result())
+    assert h.list()[0].performance == {"seconds": 1.0, "peak_memory_mb": 100.0}
+    # Resultados de 0.1.x (sin «ancestors» ni «performance») siguen abriéndose.
+    old = make_result().to_dict()
+    old.pop("ancestors"), old.pop("performance")
+    assert RunResult.from_dict(old).ancestors == {}
+
+
+def test_peak_memory_is_measured():
+    """Debe medir en Linux y Windows (en Windows usa la API Win32 con tipos declarados)."""
+    from proteinfunc_app.core.perf import peak_memory_mb
+
+    value = peak_memory_mb()
+    assert value is not None and value > 1
