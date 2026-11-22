@@ -121,3 +121,11 @@ def test_history_migrates_v01_database(tmp_path):
     old = make_result().to_dict()
     old.pop("ancestors"), old.pop("performance")
     assert RunResult.from_dict(old).ancestors == {}
+
+
+def test_peak_memory_is_measured():
+    """Debe medir en Linux y Windows (en Windows usa la API Win32 con tipos declarados)."""
+    from proteinfunc_app.core.perf import peak_memory_mb
+
+    value = peak_memory_mb()
+    assert value is not None and value > 1

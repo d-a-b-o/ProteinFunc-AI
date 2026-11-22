@@ -20,10 +20,17 @@ def peak_memory_mb() -> float | None:
                             ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
                             ("PagefileUsage", ctypes.c_size_t), ("PeakPagefileUsage", ctypes.c_size_t)]
 
+            # Declarar tipos: sin ellos ctypes trunca el handle de 64 bits a int de 32 bits.
+            kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+            kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+            kernel32.GetCurrentProcess.argtypes = []
+            get_info = kernel32.K32GetProcessMemoryInfo  # Windows 7+; equivale a psapi.GetProcessMemoryInfo
+            get_info.restype = wintypes.BOOL
+            get_info.argtypes = [wintypes.HANDLE, ctypes.POINTER(Counters), wintypes.DWORD]
+
             counters = Counters()
             counters.cb = ctypes.sizeof(Counters)
-            proc = ctypes.windll.kernel32.GetCurrentProcess()
-            if ctypes.windll.psapi.GetProcessMemoryInfo(proc, ctypes.byref(counters), counters.cb):
+            if get_info(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb):
                 return counters.PeakWorkingSetSize / 2**20
             return None
         import resource
