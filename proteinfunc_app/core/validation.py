@@ -7,6 +7,7 @@ que un registro aceptado aquí es aceptado también por ``ProteinGOPredictor``.
 """
 from __future__ import annotations
 
+import math
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -89,6 +90,23 @@ class ValidationReport:
         return [(r.record_id, r.sequence) for r in self.accepted]
 
 
+def _entropy(counts: dict, n: int) -> float:
+    return -sum(c / n * math.log2(c / n) for c in counts.values())
+
+
+def looks_like_nucleotides(sequence: str) -> bool:
+    """ADN/ARN pegado por error. A, C, G, T y U también son letras de aminoácidos, así que
+    sin esta comprobación una secuencia de nucleótidos pasaría como «proteína» de 4 residuos.
+    Criterio: ≥ 20 caracteres, ≥ 90 % de A/C/G/T/U/N y al menos 3 nucleótidos distintos
+    (así una poliglicina «GGGG…» sigue tratándose como proteína de baja complejidad)."""
+    n = len(sequence)
+    if n < 20:
+        return False
+    nucleotide = sum(sequence.count(x) for x in "ACGTUN")
+    distinct = sum(1 for x in "ACGTU" if x in sequence)
+    return nucleotide / n >= 0.9 and distinct >= 3
+
+
 def complexity_warning(sequence: str) -> str | None:
     """Detecta secuencias atípicas para las que el modelo igual asignará funciones.
 
@@ -104,16 +122,18 @@ def complexity_warning(sequence: str) -> str | None:
     counts = {}
     for aa in sequence:
         counts[aa] = counts.get(aa, 0) + 1
-    import math
-
-    entropy = -sum(c / n * math.log2(c / n) for c in counts.values())
+    entropy = _entropy(counts, n)
     top_aa, top = max(counts.items(), key=lambda kv: kv[1])
     ambiguous = sum(counts.get(a, 0) for a in "XBZJ") / n
     if ambiguous > 0.2:
         return f"Secuencia atípica: {ambiguous:.0%} de residuos ambiguos (X/B/Z/J); los resultados son poco fiables."
-    if top / n > 0.4 or entropy < 2.5:
-        return (f"Secuencia de baja complejidad ({top_aa} = {top / n:.0%} de los residuos); "
-                "el modelo asigna funciones igualmente, pero los resultados son poco fiables.")
+    if top / n > 0.4:
+        return (f"Secuencia de baja complejidad: {top_aa} ocupa el {top / n:.0%} de los residuos. "
+                "El modelo asigna funciones igualmente, pero los resultados son poco fiables.")
+    if entropy < 2.5:
+        return (f"Secuencia de baja complejidad: usa solo {len(counts)} aminoácidos distintos "
+                f"(diversidad {entropy:.1f} bits; una proteína típica ronda 4,2). "
+                "El modelo asigna funciones igualmente, pero los resultados son poco fiables.")
     return None
 
 
@@ -121,6 +141,13 @@ def _check_sequence(check: RecordCheck, max_length: int | None) -> None:
     if not check.sequence:
         check.status = ERROR
         check.messages.append("La secuencia está vacía.")
+        return
+    if looks_like_nucleotides(check.sequence):
+        check.status = ERROR
+        check.messages.append(
+            "Parece una secuencia de ADN/ARN (solo A, C, G, T/U), no de proteína. Esta aplicación "
+            "necesita la secuencia de aminoácidos: tradúcela primero (por ejemplo con ExPASy Translate "
+            "o Biopython) y vuelve a cargarla.")
         return
     invalid = sorted(set(check.sequence) - _ALLOWED)
     if invalid:
