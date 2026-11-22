@@ -1,0 +1,11 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021\\Scripts\\python.exe",
+    "-m",
+    "pip",
+    "freeze"
+  ],
+  "start": "2026-11-22T13:55:58.959972-05:00",
+  "seconds": 0.8557961001060903,
+  "exit_code": 0
+}

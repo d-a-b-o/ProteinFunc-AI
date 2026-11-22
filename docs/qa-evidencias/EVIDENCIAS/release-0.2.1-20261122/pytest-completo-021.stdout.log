@@ -1,0 +1,53 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- D:\ISW-USIL-2026-2\Bioinformatica\TF\.qa-venv-021\Scripts\python.exe
+PySide6 6.12.0 -- Qt runtime 6.12.0 -- Qt compiled 6.12.0
+rootdir: D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFunc-AI
+plugins: anyio-4.16.0, qt-4.5.0
+collecting ... collected 43 items
+
+tests/test_cli.py::test_check_runs_from_other_directory_with_spaces PASSED [  2%]
+tests/test_gui.py::test_analyze_fasta_and_filter PASSED                  [  4%]
+tests/test_gui.py::test_model_loaded_once PASSED                         [  6%]
+tests/test_gui.py::test_gui_matches_predictor PASSED                     [  9%]
+tests/test_gui.py::test_invalid_records_are_excluded PASSED              [ 11%]
+tests/test_gui.py::test_cancel_discards_partial_results PASSED           [ 13%]
+tests/test_gui.py::test_export_from_gui PASSED                           [ 16%]
+tests/test_gui.py::test_history_reopen PASSED                            [ 18%]
+tests/test_gui.py::test_broken_bundle_disables_analysis PASSED           [ 20%]
+tests/test_gui.py::test_summary_panel_and_atypical_warning PASSED        [ 23%]
+tests/test_gui.py::test_performance_is_recorded PASSED                   [ 25%]
+tests/test_gui.py::test_preferences_apply_batch_and_threads PASSED       [ 27%]
+tests/test_gui.py::test_settings_persist PASSED                          [ 30%]
+tests/test_gui.py::test_about_and_preferences_dialogs PASSED             [ 32%]
+tests/test_inference.py::test_matches_reference_prediction_from_kaggle PASSED [ 34%]
+tests/test_inference.py::test_direct_and_propagated_scores PASSED        [ 37%]
+tests/test_inference.py::test_chunked_prediction_equals_single_call PASSED [ 39%]
+tests/test_inference.py::test_cancel_returns_none_not_partial PASSED     [ 41%]
+tests/test_inference.py::test_truncation_flag PASSED                     [ 44%]
+tests/test_integrity.py::test_real_bundle_passes_and_matches_checksums PASSED [ 46%]
+tests/test_integrity.py::test_tampered_file_is_detected PASSED           [ 48%]
+tests/test_integrity.py::test_missing_file_is_detected PASSED            [ 51%]
+tests/test_integrity.py::test_inconsistent_manifest_is_detected PASSED   [ 53%]
+tests/test_integrity.py::test_mixed_versions_are_rejected_when_loading PASSED [ 55%]
+tests/test_results_history.py::test_filters PASSED                       [ 58%]
+tests/test_results_history.py::test_json_export_roundtrip_with_accents PASSED [ 60%]
+tests/test_results_history.py::test_csv_and_tsv_exports_match_view PASSED [ 62%]
+tests/test_results_history.py::test_history_lifecycle PASSED             [ 65%]
+tests/test_results_history.py::test_specific_only_hides_visible_ancestors PASSED [ 67%]
+tests/test_results_history.py::test_history_migrates_v01_database PASSED [ 69%]
+tests/test_results_history.py::test_peak_memory_is_measured PASSED       [ 72%]
+tests/test_validation.py::test_raw_sequence_is_single_query PASSED       [ 74%]
+tests/test_validation.py::test_empty_input_is_global_error PASSED        [ 76%]
+tests/test_validation.py::test_reports_every_problem_not_only_the_first PASSED [ 79%]
+tests/test_validation.py::test_long_sequence_is_warning_and_keeps_full_sequence PASSED [ 81%]
+tests/test_validation.py::test_uniprot_ids_are_normalised_like_runtime PASSED [ 83%]
+tests/test_validation.py::test_validation_agrees_with_runtime_parser PASSED [ 86%]
+tests/test_validation.py::test_reads_latin1_files PASSED                 [ 88%]
+tests/test_validation.py::test_text_before_first_header_is_clear_error PASSED [ 90%]
+tests/test_validation.py::test_low_complexity_is_warning_but_real_proteins_are_not PASSED [ 93%]
+tests/test_validation.py::test_example_test_files_validate_as_documented PASSED [ 95%]
+tests/test_validation.py::test_dna_and_rna_are_rejected_but_protein_extremes_are_not PASSED [ 97%]
+tests/test_validation.py::test_low_complexity_message_explains_the_cause PASSED [100%]
+
+- generated xml file: D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFunc-AI\docs\qa-evidencias\EVIDENCIAS\release-0.2.1-20261122\pytest-completo-021.xml -
+============================= 43 passed in 28.36s =============================

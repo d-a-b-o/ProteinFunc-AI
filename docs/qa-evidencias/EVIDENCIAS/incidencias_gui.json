@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-22",
+  "window": "ProteinFunc AI Desktop (existente)",
+  "attempts": [
+    {
+      "action": "get_window_state, screenshot + accessibility",
+      "error": "FrameArrived timed out: timed out waiting on channel"
+    },
+    {
+      "action": "recover window, activate_window, get_window_state",
+      "error": "window capture timed out: timed out waiting on channel"
+    }
+  ],
+  "result": "NO EJECUTADO: sin captura válida; no se lanzaron inferencias en GUI ni se abrió el historial"
+}

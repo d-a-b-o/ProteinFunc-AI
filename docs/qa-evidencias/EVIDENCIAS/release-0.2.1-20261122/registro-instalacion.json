@@ -1,0 +1,15 @@
+{
+  "authorization": "Usuario autorizó venv y dependencias; red adicional autorizada tras WinError 10013.",
+  "venv": "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021",
+  "include_system_site_packages": false,
+  "raw_log": "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021\\QA_REGISTROS\\instalacion-dependencias-release021.log",
+  "raw_bytes": 16392827,
+  "raw_sha256": "ec94323b1b9ff9cd4d325ed26750c059061406cbfaad88316e10a9376adaba9c",
+  "compressed_log": "instalacion-dependencias.log.gz",
+  "commands": [
+    "python -m venv .qa-venv-021",
+    ".qa-venv-021/Scripts/python.exe -m pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu",
+    ".qa-venv-021/Scripts/python.exe -m pip install -r ProteinFunc-AI/requirements.txt pytest pytest-qt"
+  ],
+  "notes": "Primer intento torch bloqueado por sockets; reintento autorizado exitoso. No se instaló PyInstaller ni se actualizó pip/global. Log de segunda instalación preservado bruto y comprimido."
+}

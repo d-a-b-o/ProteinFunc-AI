@@ -1,0 +1,32 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Claudio\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFunc-AI
+plugins: anyio-4.14.2
+collecting ... collected 24 items / 2 deselected / 22 selected
+
+tests/test_validation.py::test_raw_sequence_is_single_query PASSED       [  4%]
+tests/test_validation.py::test_empty_input_is_global_error PASSED        [  9%]
+tests/test_validation.py::test_reports_every_problem_not_only_the_first PASSED [ 13%]
+tests/test_validation.py::test_long_sequence_is_warning_and_keeps_full_sequence PASSED [ 18%]
+tests/test_validation.py::test_uniprot_ids_are_normalised_like_runtime PASSED [ 22%]
+tests/test_validation.py::test_reads_latin1_files PASSED                 [ 27%]
+tests/test_validation.py::test_text_before_first_header_is_clear_error PASSED [ 31%]
+tests/test_validation.py::test_low_complexity_is_warning_but_real_proteins_are_not PASSED [ 36%]
+tests/test_validation.py::test_example_test_files_validate_as_documented PASSED [ 40%]
+tests/test_validation.py::test_dna_and_rna_are_rejected_but_protein_extremes_are_not PASSED [ 45%]
+tests/test_validation.py::test_low_complexity_message_explains_the_cause PASSED [ 50%]
+tests/test_results_history.py::test_filters PASSED                       [ 54%]
+tests/test_results_history.py::test_json_export_roundtrip_with_accents PASSED [ 59%]
+tests/test_results_history.py::test_csv_and_tsv_exports_match_view PASSED [ 63%]
+tests/test_results_history.py::test_history_lifecycle PASSED             [ 68%]
+tests/test_results_history.py::test_specific_only_hides_visible_ancestors PASSED [ 72%]
+tests/test_results_history.py::test_history_migrates_v01_database PASSED [ 77%]
+tests/test_results_history.py::test_peak_memory_is_measured PASSED       [ 81%]
+tests/test_integrity.py::test_real_bundle_passes_and_matches_checksums PASSED [ 86%]
+tests/test_integrity.py::test_tampered_file_is_detected PASSED           [ 90%]
+tests/test_integrity.py::test_missing_file_is_detected PASSED            [ 95%]
+tests/test_integrity.py::test_inconsistent_manifest_is_detected PASSED   [100%]
+
+- generated xml file: D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFunc-AI\docs\qa-evidencias\EVIDENCIAS\pytest-subconjunto.xml -
+====================== 22 passed, 2 deselected in 0.53s =======================
+

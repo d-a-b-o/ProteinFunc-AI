@@ -1,0 +1,28 @@
+{
+  "before": {
+    "tests": 41,
+    "passed": 3,
+    "failed": 38,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": 2.08
+  },
+  "related": {
+    "tests": 61,
+    "passed": 61,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": 13.913
+  },
+  "full": {
+    "tests": 84,
+    "passed": 84,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_seconds": 18.709
+  },
+  "new_regression_cases": 41,
+  "base_cases": 43
+}

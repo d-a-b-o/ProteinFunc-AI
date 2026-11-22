@@ -1,0 +1,2611 @@
+{
+  "examples\\con_errores.fasta": {
+    "summary": "5 registros · 1 válido · 4 con error",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "valida_1",
+        "status": "ok",
+        "length": 76,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "vacia",
+        "status": "error",
+        "length": 0,
+        "accepted": false,
+        "messages": [
+          "La secuencia está vacía."
+        ]
+      },
+      {
+        "id": "con_simbolos",
+        "status": "error",
+        "length": 24,
+        "accepted": false,
+        "messages": [
+          "Símbolos no admitidos '#' '1' en las posiciones 11, 18."
+        ]
+      },
+      {
+        "id": "valida_1",
+        "status": "error",
+        "length": 24,
+        "accepted": false,
+        "messages": [
+          "Identificador duplicado: ya aparece en el registro 1 (línea 1)."
+        ]
+      },
+      {
+        "id": "",
+        "status": "error",
+        "length": 10,
+        "accepted": false,
+        "messages": [
+          "Cabecera FASTA vacía: falta el identificador después de '>'."
+        ]
+      }
+    ]
+  },
+  "examples\\muestra.fasta": {
+    "summary": "3 registros · 3 válidos · 1 con aviso",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "P01308",
+        "status": "ok",
+        "length": 110,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "ubiquitina",
+        "status": "ok",
+        "length": 76,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "ejemplo_kaggle",
+        "status": "warning",
+        "length": 1033,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 1033 residuos: el modelo usará solo los primeros 512."
+        ]
+      }
+    ]
+  },
+  "examples\\pruebas\\01_proteinas_conocidas.fasta": {
+    "summary": "8 registros · 8 válidos",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "P69905",
+        "status": "ok",
+        "length": 142,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P68871",
+        "status": "ok",
+        "length": 147,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P02144",
+        "status": "ok",
+        "length": 154,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P99999",
+        "status": "ok",
+        "length": 105,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P0DP23",
+        "status": "ok",
+        "length": 149,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P61626",
+        "status": "ok",
+        "length": 148,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P42212",
+        "status": "ok",
+        "length": 238,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P01308",
+        "status": "ok",
+        "length": 110,
+        "accepted": true,
+        "messages": []
+      }
+    ]
+  },
+  "examples\\pruebas\\02_secuencia_para_pegar.txt": {
+    "summary": "1 registro · 1 válido",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "query_1",
+        "status": "ok",
+        "length": 238,
+        "accepted": true,
+        "messages": []
+      }
+    ]
+  },
+  "examples\\pruebas\\03_casos_limite.fasta": {
+    "summary": "6 registros · 6 válidos · 2 con aviso",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "corta_10aa",
+        "status": "ok",
+        "length": 10,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "minusculas_y_espacios",
+        "status": "ok",
+        "length": 22,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "con_asterisco_final",
+        "status": "ok",
+        "length": 34,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "residuos_ambiguos_XBZUO",
+        "status": "ok",
+        "length": 16,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "poliglicina_sin_sentido_biologico",
+        "status": "warning",
+        "length": 30,
+        "accepted": true,
+        "messages": [
+          "Secuencia de baja complejidad: G ocupa el 100% de los residuos. El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+        ]
+      },
+      {
+        "id": "larga_1500aa_SINTETICA",
+        "status": "warning",
+        "length": 1500,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 1500 residuos: el modelo usará solo los primeros 512.",
+          "Secuencia de baja complejidad: F ocupa el 100% de los residuos. El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+        ]
+      }
+    ]
+  },
+  "examples\\pruebas\\04_errores.fasta": {
+    "summary": "7 registros · 2 válidos · 5 con error",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "sin_cabecera_antes",
+        "status": "error",
+        "length": 0,
+        "accepted": false,
+        "messages": [
+          "La secuencia está vacía."
+        ]
+      },
+      {
+        "id": "vacia",
+        "status": "error",
+        "length": 0,
+        "accepted": false,
+        "messages": [
+          "La secuencia está vacía."
+        ]
+      },
+      {
+        "id": "numeros_en_secuencia",
+        "status": "error",
+        "length": 19,
+        "accepted": false,
+        "messages": [
+          "Símbolos no admitidos '1' '2' '3' en las posiciones 11, 12, 13."
+        ]
+      },
+      {
+        "id": "P69905",
+        "status": "ok",
+        "length": 34,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "P69905",
+        "status": "error",
+        "length": 35,
+        "accepted": false,
+        "messages": [
+          "Identificador duplicado: ya aparece en el registro 4 (línea 5)."
+        ]
+      },
+      {
+        "id": "",
+        "status": "error",
+        "length": 10,
+        "accepted": false,
+        "messages": [
+          "Cabecera FASTA vacía: falta el identificador después de '>'."
+        ]
+      },
+      {
+        "id": "valida_ok",
+        "status": "ok",
+        "length": 42,
+        "accepted": true,
+        "messages": []
+      }
+    ]
+  },
+  "examples\\pruebas\\05_lote_300_sinteticas.fasta": {
+    "summary": "300 registros · 300 válidos · 94 con aviso",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "sintetica_001",
+        "status": "ok",
+        "length": 194,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_002",
+        "status": "warning",
+        "length": 647,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 647 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_003",
+        "status": "ok",
+        "length": 181,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_004",
+        "status": "ok",
+        "length": 470,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_005",
+        "status": "ok",
+        "length": 490,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_006",
+        "status": "ok",
+        "length": 252,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_007",
+        "status": "ok",
+        "length": 358,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_008",
+        "status": "warning",
+        "length": 591,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 591 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_009",
+        "status": "ok",
+        "length": 159,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_010",
+        "status": "warning",
+        "length": 588,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 588 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_011",
+        "status": "warning",
+        "length": 598,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 598 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_012",
+        "status": "warning",
+        "length": 606,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 606 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_013",
+        "status": "warning",
+        "length": 608,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 608 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_014",
+        "status": "ok",
+        "length": 159,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_015",
+        "status": "ok",
+        "length": 170,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_016",
+        "status": "warning",
+        "length": 592,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 592 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_017",
+        "status": "ok",
+        "length": 338,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_018",
+        "status": "warning",
+        "length": 632,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 632 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_019",
+        "status": "ok",
+        "length": 311,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_020",
+        "status": "ok",
+        "length": 172,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_021",
+        "status": "warning",
+        "length": 676,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 676 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_022",
+        "status": "ok",
+        "length": 499,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_023",
+        "status": "ok",
+        "length": 276,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_024",
+        "status": "warning",
+        "length": 662,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 662 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_025",
+        "status": "warning",
+        "length": 690,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 690 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_026",
+        "status": "ok",
+        "length": 225,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_027",
+        "status": "warning",
+        "length": 657,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 657 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_028",
+        "status": "ok",
+        "length": 409,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_029",
+        "status": "ok",
+        "length": 268,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_030",
+        "status": "ok",
+        "length": 456,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_031",
+        "status": "ok",
+        "length": 382,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_032",
+        "status": "warning",
+        "length": 654,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 654 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_033",
+        "status": "warning",
+        "length": 594,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 594 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_034",
+        "status": "ok",
+        "length": 446,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_035",
+        "status": "ok",
+        "length": 383,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_036",
+        "status": "ok",
+        "length": 197,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_037",
+        "status": "warning",
+        "length": 522,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 522 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_038",
+        "status": "ok",
+        "length": 247,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_039",
+        "status": "warning",
+        "length": 635,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 635 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_040",
+        "status": "ok",
+        "length": 375,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_041",
+        "status": "warning",
+        "length": 564,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 564 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_042",
+        "status": "ok",
+        "length": 271,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_043",
+        "status": "warning",
+        "length": 670,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 670 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_044",
+        "status": "ok",
+        "length": 350,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_045",
+        "status": "ok",
+        "length": 96,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_046",
+        "status": "warning",
+        "length": 614,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 614 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_047",
+        "status": "warning",
+        "length": 554,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 554 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_048",
+        "status": "ok",
+        "length": 426,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_049",
+        "status": "ok",
+        "length": 85,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_050",
+        "status": "warning",
+        "length": 607,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 607 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_051",
+        "status": "ok",
+        "length": 497,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_052",
+        "status": "ok",
+        "length": 266,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_053",
+        "status": "ok",
+        "length": 317,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_054",
+        "status": "ok",
+        "length": 303,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_055",
+        "status": "warning",
+        "length": 687,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 687 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_056",
+        "status": "ok",
+        "length": 411,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_057",
+        "status": "ok",
+        "length": 365,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_058",
+        "status": "ok",
+        "length": 183,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_059",
+        "status": "ok",
+        "length": 484,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_060",
+        "status": "ok",
+        "length": 257,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_061",
+        "status": "warning",
+        "length": 537,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 537 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_062",
+        "status": "ok",
+        "length": 195,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_063",
+        "status": "ok",
+        "length": 238,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_064",
+        "status": "ok",
+        "length": 244,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_065",
+        "status": "ok",
+        "length": 495,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_066",
+        "status": "warning",
+        "length": 563,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 563 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_067",
+        "status": "warning",
+        "length": 694,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 694 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_068",
+        "status": "ok",
+        "length": 164,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_069",
+        "status": "ok",
+        "length": 214,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_070",
+        "status": "ok",
+        "length": 100,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_071",
+        "status": "ok",
+        "length": 372,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_072",
+        "status": "ok",
+        "length": 275,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_073",
+        "status": "ok",
+        "length": 437,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_074",
+        "status": "ok",
+        "length": 303,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_075",
+        "status": "warning",
+        "length": 525,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 525 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_076",
+        "status": "warning",
+        "length": 600,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 600 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_077",
+        "status": "warning",
+        "length": 627,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 627 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_078",
+        "status": "ok",
+        "length": 331,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_079",
+        "status": "warning",
+        "length": 598,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 598 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_080",
+        "status": "warning",
+        "length": 634,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 634 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_081",
+        "status": "warning",
+        "length": 540,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 540 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_082",
+        "status": "ok",
+        "length": 407,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_083",
+        "status": "ok",
+        "length": 224,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_084",
+        "status": "ok",
+        "length": 209,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_085",
+        "status": "warning",
+        "length": 528,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 528 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_086",
+        "status": "ok",
+        "length": 264,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_087",
+        "status": "ok",
+        "length": 209,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_088",
+        "status": "warning",
+        "length": 640,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 640 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_089",
+        "status": "ok",
+        "length": 111,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_090",
+        "status": "ok",
+        "length": 311,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_091",
+        "status": "ok",
+        "length": 282,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_092",
+        "status": "ok",
+        "length": 504,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_093",
+        "status": "ok",
+        "length": 200,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_094",
+        "status": "warning",
+        "length": 617,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 617 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_095",
+        "status": "warning",
+        "length": 640,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 640 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_096",
+        "status": "ok",
+        "length": 443,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_097",
+        "status": "ok",
+        "length": 335,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_098",
+        "status": "warning",
+        "length": 676,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 676 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_099",
+        "status": "warning",
+        "length": 650,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 650 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_100",
+        "status": "ok",
+        "length": 327,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_101",
+        "status": "ok",
+        "length": 338,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_102",
+        "status": "ok",
+        "length": 326,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_103",
+        "status": "warning",
+        "length": 661,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 661 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_104",
+        "status": "ok",
+        "length": 398,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_105",
+        "status": "ok",
+        "length": 285,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_106",
+        "status": "warning",
+        "length": 668,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 668 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_107",
+        "status": "warning",
+        "length": 557,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 557 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_108",
+        "status": "warning",
+        "length": 521,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 521 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_109",
+        "status": "ok",
+        "length": 484,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_110",
+        "status": "warning",
+        "length": 695,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 695 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_111",
+        "status": "warning",
+        "length": 586,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 586 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_112",
+        "status": "ok",
+        "length": 92,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_113",
+        "status": "ok",
+        "length": 256,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_114",
+        "status": "ok",
+        "length": 317,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_115",
+        "status": "warning",
+        "length": 668,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 668 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_116",
+        "status": "warning",
+        "length": 670,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 670 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_117",
+        "status": "ok",
+        "length": 222,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_118",
+        "status": "ok",
+        "length": 248,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_119",
+        "status": "ok",
+        "length": 152,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_120",
+        "status": "ok",
+        "length": 81,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_121",
+        "status": "ok",
+        "length": 419,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_122",
+        "status": "warning",
+        "length": 598,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 598 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_123",
+        "status": "ok",
+        "length": 441,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_124",
+        "status": "ok",
+        "length": 381,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_125",
+        "status": "ok",
+        "length": 493,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_126",
+        "status": "ok",
+        "length": 126,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_127",
+        "status": "ok",
+        "length": 154,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_128",
+        "status": "ok",
+        "length": 235,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_129",
+        "status": "ok",
+        "length": 346,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_130",
+        "status": "ok",
+        "length": 427,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_131",
+        "status": "ok",
+        "length": 144,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_132",
+        "status": "ok",
+        "length": 500,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_133",
+        "status": "warning",
+        "length": 625,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 625 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_134",
+        "status": "ok",
+        "length": 263,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_135",
+        "status": "warning",
+        "length": 539,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 539 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_136",
+        "status": "ok",
+        "length": 468,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_137",
+        "status": "ok",
+        "length": 248,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_138",
+        "status": "ok",
+        "length": 433,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_139",
+        "status": "ok",
+        "length": 422,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_140",
+        "status": "ok",
+        "length": 476,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_141",
+        "status": "ok",
+        "length": 246,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_142",
+        "status": "ok",
+        "length": 272,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_143",
+        "status": "ok",
+        "length": 174,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_144",
+        "status": "warning",
+        "length": 567,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 567 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_145",
+        "status": "ok",
+        "length": 300,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_146",
+        "status": "warning",
+        "length": 611,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 611 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_147",
+        "status": "ok",
+        "length": 341,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_148",
+        "status": "ok",
+        "length": 95,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_149",
+        "status": "ok",
+        "length": 271,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_150",
+        "status": "warning",
+        "length": 516,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 516 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_151",
+        "status": "ok",
+        "length": 115,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_152",
+        "status": "ok",
+        "length": 267,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_153",
+        "status": "warning",
+        "length": 570,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 570 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_154",
+        "status": "ok",
+        "length": 450,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_155",
+        "status": "ok",
+        "length": 494,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_156",
+        "status": "ok",
+        "length": 237,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_157",
+        "status": "ok",
+        "length": 195,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_158",
+        "status": "ok",
+        "length": 201,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_159",
+        "status": "ok",
+        "length": 474,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_160",
+        "status": "ok",
+        "length": 271,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_161",
+        "status": "ok",
+        "length": 453,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_162",
+        "status": "warning",
+        "length": 556,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 556 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_163",
+        "status": "ok",
+        "length": 190,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_164",
+        "status": "ok",
+        "length": 249,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_165",
+        "status": "ok",
+        "length": 95,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_166",
+        "status": "warning",
+        "length": 562,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 562 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_167",
+        "status": "ok",
+        "length": 167,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_168",
+        "status": "warning",
+        "length": 562,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 562 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_169",
+        "status": "ok",
+        "length": 304,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_170",
+        "status": "warning",
+        "length": 635,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 635 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_171",
+        "status": "warning",
+        "length": 670,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 670 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_172",
+        "status": "ok",
+        "length": 165,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_173",
+        "status": "ok",
+        "length": 281,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_174",
+        "status": "ok",
+        "length": 196,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_175",
+        "status": "warning",
+        "length": 694,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 694 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_176",
+        "status": "warning",
+        "length": 617,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 617 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_177",
+        "status": "ok",
+        "length": 486,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_178",
+        "status": "ok",
+        "length": 505,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_179",
+        "status": "warning",
+        "length": 563,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 563 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_180",
+        "status": "ok",
+        "length": 312,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_181",
+        "status": "ok",
+        "length": 213,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_182",
+        "status": "warning",
+        "length": 543,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 543 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_183",
+        "status": "ok",
+        "length": 364,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_184",
+        "status": "ok",
+        "length": 144,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_185",
+        "status": "warning",
+        "length": 561,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 561 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_186",
+        "status": "warning",
+        "length": 536,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 536 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_187",
+        "status": "warning",
+        "length": 640,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 640 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_188",
+        "status": "ok",
+        "length": 272,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_189",
+        "status": "ok",
+        "length": 310,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_190",
+        "status": "ok",
+        "length": 281,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_191",
+        "status": "ok",
+        "length": 289,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_192",
+        "status": "ok",
+        "length": 497,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_193",
+        "status": "ok",
+        "length": 308,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_194",
+        "status": "ok",
+        "length": 209,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_195",
+        "status": "ok",
+        "length": 223,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_196",
+        "status": "ok",
+        "length": 481,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_197",
+        "status": "warning",
+        "length": 644,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 644 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_198",
+        "status": "ok",
+        "length": 423,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_199",
+        "status": "ok",
+        "length": 387,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_200",
+        "status": "warning",
+        "length": 631,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 631 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_201",
+        "status": "warning",
+        "length": 588,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 588 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_202",
+        "status": "ok",
+        "length": 118,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_203",
+        "status": "ok",
+        "length": 475,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_204",
+        "status": "ok",
+        "length": 442,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_205",
+        "status": "ok",
+        "length": 417,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_206",
+        "status": "ok",
+        "length": 413,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_207",
+        "status": "warning",
+        "length": 665,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 665 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_208",
+        "status": "ok",
+        "length": 296,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_209",
+        "status": "ok",
+        "length": 192,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_210",
+        "status": "warning",
+        "length": 648,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 648 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_211",
+        "status": "ok",
+        "length": 290,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_212",
+        "status": "ok",
+        "length": 415,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_213",
+        "status": "warning",
+        "length": 609,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 609 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_214",
+        "status": "warning",
+        "length": 562,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 562 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_215",
+        "status": "ok",
+        "length": 182,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_216",
+        "status": "warning",
+        "length": 680,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 680 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_217",
+        "status": "ok",
+        "length": 202,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_218",
+        "status": "ok",
+        "length": 123,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_219",
+        "status": "ok",
+        "length": 195,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_220",
+        "status": "ok",
+        "length": 485,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_221",
+        "status": "ok",
+        "length": 482,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_222",
+        "status": "ok",
+        "length": 418,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_223",
+        "status": "warning",
+        "length": 614,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 614 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_224",
+        "status": "ok",
+        "length": 249,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_225",
+        "status": "ok",
+        "length": 300,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_226",
+        "status": "ok",
+        "length": 242,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_227",
+        "status": "warning",
+        "length": 700,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 700 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_228",
+        "status": "ok",
+        "length": 274,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_229",
+        "status": "ok",
+        "length": 222,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_230",
+        "status": "ok",
+        "length": 404,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_231",
+        "status": "warning",
+        "length": 541,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 541 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_232",
+        "status": "ok",
+        "length": 365,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_233",
+        "status": "warning",
+        "length": 647,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 647 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_234",
+        "status": "ok",
+        "length": 189,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_235",
+        "status": "warning",
+        "length": 542,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 542 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_236",
+        "status": "warning",
+        "length": 692,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 692 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_237",
+        "status": "ok",
+        "length": 311,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_238",
+        "status": "ok",
+        "length": 427,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_239",
+        "status": "warning",
+        "length": 586,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 586 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_240",
+        "status": "ok",
+        "length": 407,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_241",
+        "status": "ok",
+        "length": 371,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_242",
+        "status": "ok",
+        "length": 471,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_243",
+        "status": "ok",
+        "length": 430,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_244",
+        "status": "ok",
+        "length": 269,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_245",
+        "status": "warning",
+        "length": 584,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 584 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_246",
+        "status": "warning",
+        "length": 640,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 640 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_247",
+        "status": "warning",
+        "length": 573,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 573 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_248",
+        "status": "ok",
+        "length": 173,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_249",
+        "status": "ok",
+        "length": 316,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_250",
+        "status": "ok",
+        "length": 89,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_251",
+        "status": "ok",
+        "length": 234,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_252",
+        "status": "ok",
+        "length": 490,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_253",
+        "status": "ok",
+        "length": 270,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_254",
+        "status": "ok",
+        "length": 278,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_255",
+        "status": "ok",
+        "length": 195,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_256",
+        "status": "ok",
+        "length": 456,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_257",
+        "status": "ok",
+        "length": 316,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_258",
+        "status": "ok",
+        "length": 142,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_259",
+        "status": "ok",
+        "length": 189,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_260",
+        "status": "warning",
+        "length": 568,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 568 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_261",
+        "status": "ok",
+        "length": 167,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_262",
+        "status": "warning",
+        "length": 592,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 592 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_263",
+        "status": "ok",
+        "length": 423,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_264",
+        "status": "ok",
+        "length": 453,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_265",
+        "status": "warning",
+        "length": 521,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 521 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_266",
+        "status": "ok",
+        "length": 297,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_267",
+        "status": "ok",
+        "length": 256,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_268",
+        "status": "warning",
+        "length": 635,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 635 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_269",
+        "status": "ok",
+        "length": 490,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_270",
+        "status": "warning",
+        "length": 518,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 518 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_271",
+        "status": "ok",
+        "length": 345,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_272",
+        "status": "ok",
+        "length": 233,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_273",
+        "status": "warning",
+        "length": 563,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 563 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_274",
+        "status": "warning",
+        "length": 627,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 627 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_275",
+        "status": "ok",
+        "length": 340,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_276",
+        "status": "ok",
+        "length": 208,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_277",
+        "status": "ok",
+        "length": 327,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_278",
+        "status": "ok",
+        "length": 187,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_279",
+        "status": "warning",
+        "length": 553,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 553 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_280",
+        "status": "warning",
+        "length": 598,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 598 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_281",
+        "status": "ok",
+        "length": 434,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_282",
+        "status": "warning",
+        "length": 589,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 589 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_283",
+        "status": "ok",
+        "length": 275,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_284",
+        "status": "ok",
+        "length": 136,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_285",
+        "status": "ok",
+        "length": 217,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_286",
+        "status": "ok",
+        "length": 393,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_287",
+        "status": "ok",
+        "length": 328,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_288",
+        "status": "ok",
+        "length": 266,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_289",
+        "status": "ok",
+        "length": 486,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_290",
+        "status": "ok",
+        "length": 159,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_291",
+        "status": "ok",
+        "length": 458,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_292",
+        "status": "warning",
+        "length": 553,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 553 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_293",
+        "status": "ok",
+        "length": 280,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_294",
+        "status": "warning",
+        "length": 633,
+        "accepted": true,
+        "messages": [
+          "Secuencia de 633 residuos: el modelo usará solo los primeros 512."
+        ]
+      },
+      {
+        "id": "sintetica_295",
+        "status": "ok",
+        "length": 406,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_296",
+        "status": "ok",
+        "length": 344,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_297",
+        "status": "ok",
+        "length": 151,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_298",
+        "status": "ok",
+        "length": 373,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_299",
+        "status": "ok",
+        "length": 363,
+        "accepted": true,
+        "messages": []
+      },
+      {
+        "id": "sintetica_300",
+        "status": "ok",
+        "length": 305,
+        "accepted": true,
+        "messages": []
+      }
+    ]
+  },
+  "examples\\pruebas\\06_texto_antes_de_cabecera.fasta": {
+    "summary": "FASTA inválido: hay texto antes de la primera cabecera «>» (línea 2). Cada secuencia debe ir debajo de su cabecera, o pega una sola secuencia sin cabeceras.",
+    "global_errors": [
+      "FASTA inválido: hay texto antes de la primera cabecera «>» (línea 2). Cada secuencia debe ir debajo de su cabecera, o pega una sola secuencia sin cabeceras."
+    ],
+    "records": []
+  },
+  "examples\\pruebas\\07_adn_en_vez_de_proteina.fasta": {
+    "summary": "3 registros · 1 válido · 2 con error",
+    "global_errors": [],
+    "records": [
+      {
+        "id": "adn_codificante",
+        "status": "error",
+        "length": 72,
+        "accepted": false,
+        "messages": [
+          "Parece una secuencia de ADN/ARN (solo A, C, G, T/U), no de proteína. Esta aplicación necesita la secuencia de aminoácidos: tradúcela primero (por ejemplo con ExPASy Translate o Biopython) y vuelve a cargarla."
+        ]
+      },
+      {
+        "id": "arn_mensajero",
+        "status": "error",
+        "length": 72,
+        "accepted": false,
+        "messages": [
+          "Parece una secuencia de ADN/ARN (solo A, C, G, T/U), no de proteína. Esta aplicación necesita la secuencia de aminoácidos: tradúcela primero (por ejemplo con ExPASy Translate o Biopython) y vuelve a cargarla."
+        ]
+      },
+      {
+        "id": "proteina_valida",
+        "status": "ok",
+        "length": 54,
+        "accepted": true,
+        "messages": []
+      }
+    ]
+  },
+  "empty_input": {
+    "global_errors": [
+      "La entrada está vacía: carga un FASTA o pega una secuencia."
+    ],
+    "accepted": 0
+  }
+}

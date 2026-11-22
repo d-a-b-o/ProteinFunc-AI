@@ -1,0 +1,20 @@
+{
+  "command": [
+    "C:\\Users\\Claudio\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "-m",
+    "pytest",
+    "tests/test_validation.py",
+    "-v",
+    "-k",
+    "dna_and_rna or low_complexity or example_test_files",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\Claudio\\AppData\\Local\\Temp\\qa021-validation-ci119c38",
+    "--junitxml",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\docs\\qa-evidencias\\EVIDENCIAS\\release-0.2.1-20261122\\pytest-validacion-inicial.xml"
+  ],
+  "start": "2026-11-22T13:53:07.907333-05:00",
+  "seconds": 0.85014390014112,
+  "exit_code": 0
+}

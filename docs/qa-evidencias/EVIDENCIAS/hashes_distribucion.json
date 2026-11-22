@@ -1,0 +1,10 @@
+{
+  "proteinfunc-check.exe": {
+    "bytes": 40565816,
+    "sha256": "94f346f18f0c12ee1d11f337e276a57da5a84c2da31d31399a91462ea38e071c"
+  },
+  "ProteinFuncAI.exe": {
+    "bytes": 40560613,
+    "sha256": "f3dff02b5211e424d445f5161c95730aa0388339f379b91c41b8fc675c440acd"
+  }
+}

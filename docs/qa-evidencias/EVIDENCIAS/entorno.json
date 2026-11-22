@@ -1,0 +1,206 @@
+{
+  "date": "2026-11-22T13:33:18.499628-05:00",
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Users\\Claudio\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "dependencies": {
+    "pytest": "9.1.1",
+    "pytest-qt": null,
+    "numpy": null,
+    "torch": null,
+    "transformers": null,
+    "safetensors": null,
+    "PySide6": null,
+    "psutil": "7.2.2"
+  },
+  "test_inventory": {
+    "test_cli.py": [
+      {
+        "name": "test_check_runs_from_other_directory_with_spaces",
+        "line": 8
+      }
+    ],
+    "test_gui.py": [
+      {
+        "name": "test_analyze_fasta_and_filter",
+        "line": 42
+      },
+      {
+        "name": "test_model_loaded_once",
+        "line": 71
+      },
+      {
+        "name": "test_gui_matches_predictor",
+        "line": 81
+      },
+      {
+        "name": "test_invalid_records_are_excluded",
+        "line": 93
+      },
+      {
+        "name": "test_cancel_discards_partial_results",
+        "line": 102
+      },
+      {
+        "name": "test_export_from_gui",
+        "line": 113
+      },
+      {
+        "name": "test_history_reopen",
+        "line": 123
+      },
+      {
+        "name": "test_broken_bundle_disables_analysis",
+        "line": 133
+      },
+      {
+        "name": "test_summary_panel_and_atypical_warning",
+        "line": 152
+      },
+      {
+        "name": "test_performance_is_recorded",
+        "line": 167
+      },
+      {
+        "name": "test_preferences_apply_batch_and_threads",
+        "line": 176
+      },
+      {
+        "name": "test_settings_persist",
+        "line": 185
+      },
+      {
+        "name": "test_about_and_preferences_dialogs",
+        "line": 203
+      }
+    ],
+    "test_inference.py": [
+      {
+        "name": "test_matches_reference_prediction_from_kaggle",
+        "line": 11
+      },
+      {
+        "name": "test_direct_and_propagated_scores",
+        "line": 23
+      },
+      {
+        "name": "test_chunked_prediction_equals_single_call",
+        "line": 36
+      },
+      {
+        "name": "test_cancel_returns_none_not_partial",
+        "line": 46
+      },
+      {
+        "name": "test_truncation_flag",
+        "line": 59
+      }
+    ],
+    "test_integrity.py": [
+      {
+        "name": "test_real_bundle_passes_and_matches_checksums",
+        "line": 10
+      },
+      {
+        "name": "test_tampered_file_is_detected",
+        "line": 25
+      },
+      {
+        "name": "test_missing_file_is_detected",
+        "line": 33
+      },
+      {
+        "name": "test_inconsistent_manifest_is_detected",
+        "line": 40
+      },
+      {
+        "name": "test_mixed_versions_are_rejected_when_loading",
+        "line": 49
+      }
+    ],
+    "test_results_history.py": [
+      {
+        "name": "test_filters",
+        "line": 25
+      },
+      {
+        "name": "test_json_export_roundtrip_with_accents",
+        "line": 34
+      },
+      {
+        "name": "test_csv_and_tsv_exports_match_view",
+        "line": 47
+      },
+      {
+        "name": "test_history_lifecycle",
+        "line": 62
+      },
+      {
+        "name": "test_specific_only_hides_visible_ancestors",
+        "line": 84
+      },
+      {
+        "name": "test_history_migrates_v01_database",
+        "line": 101
+      },
+      {
+        "name": "test_peak_memory_is_measured",
+        "line": 126
+      }
+    ],
+    "test_validation.py": [
+      {
+        "name": "test_raw_sequence_is_single_query",
+        "line": 6
+      },
+      {
+        "name": "test_empty_input_is_global_error",
+        "line": 12
+      },
+      {
+        "name": "test_reports_every_problem_not_only_the_first",
+        "line": 17
+      },
+      {
+        "name": "test_long_sequence_is_warning_and_keeps_full_sequence",
+        "line": 28
+      },
+      {
+        "name": "test_uniprot_ids_are_normalised_like_runtime",
+        "line": 36
+      },
+      {
+        "name": "test_validation_agrees_with_runtime_parser",
+        "line": 41
+      },
+      {
+        "name": "test_reads_latin1_files",
+        "line": 48
+      },
+      {
+        "name": "test_text_before_first_header_is_clear_error",
+        "line": 54
+      },
+      {
+        "name": "test_low_complexity_is_warning_but_real_proteins_are_not",
+        "line": 59
+      },
+      {
+        "name": "test_example_test_files_validate_as_documented",
+        "line": 69
+      },
+      {
+        "name": "test_dna_and_rna_are_rejected_but_protein_extremes_are_not",
+        "line": 87
+      },
+      {
+        "name": "test_low_complexity_message_explains_the_cause",
+        "line": 101
+      }
+    ]
+  },
+  "commit": "c38323717be241cfa75d7684d0ff4ab7343270cd",
+  "branch": "main"
+}

@@ -1,0 +1,392 @@
+{
+  "fuente": {
+    "ok": true,
+    "fingerprint": "7b9148321accb7d5d1b6b0b9727b5f307b9c173df68e0f1a85f8c561f210f2b0",
+    "checks": [
+      {
+        "label": "Archivos obligatorios presentes",
+        "ok": true,
+        "detail": "6 archivos"
+      },
+      {
+        "label": "Huellas SHA-256 coinciden con SHA256SUMS",
+        "ok": true,
+        "detail": "6 archivos verificados"
+      },
+      {
+        "label": "Versión de esquema del manifiesto",
+        "ok": true,
+        "detail": "schema_version = 1 (se admite 1)"
+      },
+      {
+        "label": "Vocabulario GO ordenado y sin duplicados",
+        "ok": true,
+        "detail": "768 términos"
+      },
+      {
+        "label": "Metadatos para cada término del vocabulario",
+        "ok": true,
+        "detail": "nombre, aspecto y ancestros"
+      },
+      {
+        "label": "Aspecto MF/BP/CC válido en cada término",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "label": "Ancestros GO dentro del vocabulario",
+        "ok": true,
+        "detail": "reglas is_a / part_of coherentes"
+      },
+      {
+        "label": "Umbral operativo en [0, 1]",
+        "ok": true,
+        "detail": "umbral = 0.45"
+      },
+      {
+        "label": "Longitud máxima positiva",
+        "ok": true,
+        "detail": "max_length = 512"
+      },
+      {
+        "label": "Tipo de modelo reconocido",
+        "ok": true,
+        "detail": "kind = 'esm2'"
+      }
+    ],
+    "files": [
+      {
+        "name": "manifest.json",
+        "size": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "expected": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "matches": true
+      },
+      {
+        "name": "weights.pt",
+        "size": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "expected": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "matches": true
+      },
+      {
+        "name": "backbone/config.json",
+        "size": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "expected": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "matches": true
+      },
+      {
+        "name": "backbone/model.safetensors",
+        "size": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "expected": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "matches": true
+      },
+      {
+        "name": "backbone/tokenizer_config.json",
+        "size": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "expected": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "matches": true
+      },
+      {
+        "name": "backbone/vocab.txt",
+        "size": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "expected": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "matches": true
+      }
+    ],
+    "all_files": {
+      "backbone/config.json": {
+        "bytes": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3"
+      },
+      "backbone/model.safetensors": {
+        "bytes": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd"
+      },
+      "backbone/tokenizer_config.json": {
+        "bytes": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6"
+      },
+      "backbone/vocab.txt": {
+        "bytes": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+      },
+      "manifest.json": {
+        "bytes": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e"
+      },
+      "SHA256SUMS": {
+        "bytes": 519,
+        "sha256": "0498e2600c12e57b3fed5f05fb8ea7af9d903b3628f147c9fc68b4812943938b"
+      },
+      "weights.pt": {
+        "bytes": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a"
+      }
+    }
+  },
+  "0.2.0": {
+    "ok": true,
+    "fingerprint": "7b9148321accb7d5d1b6b0b9727b5f307b9c173df68e0f1a85f8c561f210f2b0",
+    "checks": [
+      {
+        "label": "Archivos obligatorios presentes",
+        "ok": true,
+        "detail": "6 archivos"
+      },
+      {
+        "label": "Huellas SHA-256 coinciden con SHA256SUMS",
+        "ok": true,
+        "detail": "6 archivos verificados"
+      },
+      {
+        "label": "Versión de esquema del manifiesto",
+        "ok": true,
+        "detail": "schema_version = 1 (se admite 1)"
+      },
+      {
+        "label": "Vocabulario GO ordenado y sin duplicados",
+        "ok": true,
+        "detail": "768 términos"
+      },
+      {
+        "label": "Metadatos para cada término del vocabulario",
+        "ok": true,
+        "detail": "nombre, aspecto y ancestros"
+      },
+      {
+        "label": "Aspecto MF/BP/CC válido en cada término",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "label": "Ancestros GO dentro del vocabulario",
+        "ok": true,
+        "detail": "reglas is_a / part_of coherentes"
+      },
+      {
+        "label": "Umbral operativo en [0, 1]",
+        "ok": true,
+        "detail": "umbral = 0.45"
+      },
+      {
+        "label": "Longitud máxima positiva",
+        "ok": true,
+        "detail": "max_length = 512"
+      },
+      {
+        "label": "Tipo de modelo reconocido",
+        "ok": true,
+        "detail": "kind = 'esm2'"
+      }
+    ],
+    "files": [
+      {
+        "name": "manifest.json",
+        "size": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "expected": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "matches": true
+      },
+      {
+        "name": "weights.pt",
+        "size": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "expected": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "matches": true
+      },
+      {
+        "name": "backbone/config.json",
+        "size": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "expected": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "matches": true
+      },
+      {
+        "name": "backbone/model.safetensors",
+        "size": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "expected": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "matches": true
+      },
+      {
+        "name": "backbone/tokenizer_config.json",
+        "size": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "expected": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "matches": true
+      },
+      {
+        "name": "backbone/vocab.txt",
+        "size": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "expected": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "matches": true
+      }
+    ],
+    "all_files": {
+      "backbone/config.json": {
+        "bytes": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3"
+      },
+      "backbone/model.safetensors": {
+        "bytes": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd"
+      },
+      "backbone/tokenizer_config.json": {
+        "bytes": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6"
+      },
+      "backbone/vocab.txt": {
+        "bytes": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+      },
+      "manifest.json": {
+        "bytes": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e"
+      },
+      "SHA256SUMS": {
+        "bytes": 519,
+        "sha256": "0498e2600c12e57b3fed5f05fb8ea7af9d903b3628f147c9fc68b4812943938b"
+      },
+      "weights.pt": {
+        "bytes": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a"
+      }
+    }
+  },
+  "0.2.1": {
+    "ok": true,
+    "fingerprint": "7b9148321accb7d5d1b6b0b9727b5f307b9c173df68e0f1a85f8c561f210f2b0",
+    "checks": [
+      {
+        "label": "Archivos obligatorios presentes",
+        "ok": true,
+        "detail": "6 archivos"
+      },
+      {
+        "label": "Huellas SHA-256 coinciden con SHA256SUMS",
+        "ok": true,
+        "detail": "6 archivos verificados"
+      },
+      {
+        "label": "Versión de esquema del manifiesto",
+        "ok": true,
+        "detail": "schema_version = 1 (se admite 1)"
+      },
+      {
+        "label": "Vocabulario GO ordenado y sin duplicados",
+        "ok": true,
+        "detail": "768 términos"
+      },
+      {
+        "label": "Metadatos para cada término del vocabulario",
+        "ok": true,
+        "detail": "nombre, aspecto y ancestros"
+      },
+      {
+        "label": "Aspecto MF/BP/CC válido en cada término",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "label": "Ancestros GO dentro del vocabulario",
+        "ok": true,
+        "detail": "reglas is_a / part_of coherentes"
+      },
+      {
+        "label": "Umbral operativo en [0, 1]",
+        "ok": true,
+        "detail": "umbral = 0.45"
+      },
+      {
+        "label": "Longitud máxima positiva",
+        "ok": true,
+        "detail": "max_length = 512"
+      },
+      {
+        "label": "Tipo de modelo reconocido",
+        "ok": true,
+        "detail": "kind = 'esm2'"
+      }
+    ],
+    "files": [
+      {
+        "name": "manifest.json",
+        "size": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "expected": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e",
+        "matches": true
+      },
+      {
+        "name": "weights.pt",
+        "size": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "expected": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a",
+        "matches": true
+      },
+      {
+        "name": "backbone/config.json",
+        "size": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "expected": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3",
+        "matches": true
+      },
+      {
+        "name": "backbone/model.safetensors",
+        "size": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "expected": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd",
+        "matches": true
+      },
+      {
+        "name": "backbone/tokenizer_config.json",
+        "size": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "expected": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6",
+        "matches": true
+      },
+      {
+        "name": "backbone/vocab.txt",
+        "size": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "expected": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03",
+        "matches": true
+      }
+    ],
+    "all_files": {
+      "backbone/config.json": {
+        "bytes": 861,
+        "sha256": "dcb0587e7cdddd7fd3149ffd10f9770065989a6312b6cde61f54c6c80f4c0ba3"
+      },
+      "backbone/model.safetensors": {
+        "bytes": 30058380,
+        "sha256": "d15a0f7725ee54bc6186b3f52add8197ad32efdabcea3d9acab475218d11cfbd"
+      },
+      "backbone/tokenizer_config.json": {
+        "bytes": 1185,
+        "sha256": "bc81d974bd169fdefd2cf2ecb12c869eae5fc8e8262b8f69d9cf04d1958533c6"
+      },
+      "backbone/vocab.txt": {
+        "bytes": 93,
+        "sha256": "0b82cc0a7c7cf9e567b1e5892d793285b9fbae822c964ca48696f7db44598e03"
+      },
+      "manifest.json": {
+        "bytes": 197290,
+        "sha256": "3ac68bd7c20f1454a4121562cc807e62904ef8a14da86b7178c828fbc98f8a0e"
+      },
+      "SHA256SUMS": {
+        "bytes": 519,
+        "sha256": "0498e2600c12e57b3fed5f05fb8ea7af9d903b3628f147c9fc68b4812943938b"
+      },
+      "weights.pt": {
+        "bytes": 987877,
+        "sha256": "069b96515fde41287e4110b82517f38e472c206b8c5f8bd040d45a41fd5c4c7a"
+      }
+    }
+  }
+}

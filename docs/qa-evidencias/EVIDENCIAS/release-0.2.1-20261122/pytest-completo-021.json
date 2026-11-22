@@ -1,0 +1,18 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests",
+    "-v",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\Claudio\\AppData\\Local\\Temp\\qa021-suite-ksrmnd3w",
+    "--junitxml",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\docs\\qa-evidencias\\EVIDENCIAS\\release-0.2.1-20261122\\pytest-completo-021.xml"
+  ],
+  "start": "2026-11-22T13:56:00.498972-05:00",
+  "seconds": 30.689671600004658,
+  "exit_code": 0
+}

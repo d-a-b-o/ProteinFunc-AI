@@ -1,0 +1,18 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests/test_export_search.py",
+    "-v",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\Claudio\\AppData\\Local\\Temp\\qa-export-fix-5zgxlptt",
+    "--junitxml",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\docs\\qa-evidencias\\EVIDENCIAS\\correccion-exportacion-20261122\\regresion-antes.xml"
+  ],
+  "start": "2026-11-22T14:13:24.519341-05:00",
+  "seconds": 2.8338460999075323,
+  "exit_code": 1
+}

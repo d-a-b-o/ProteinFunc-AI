@@ -1,0 +1,20 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\.qa-venv-021\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests/test_export_search.py",
+    "tests/test_results_history.py",
+    "tests/test_gui.py",
+    "-v",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "C:\\Users\\Claudio\\AppData\\Local\\Temp\\qa-export-fix-mf2c1dct",
+    "--junitxml",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\docs\\qa-evidencias\\EVIDENCIAS\\pre-publicacion-20261122\\pruebas-relacionadas.xml"
+  ],
+  "start": "2026-11-22T17:01:36.425304-05:00",
+  "seconds": 16.182103999890387,
+  "exit_code": 0
+}
