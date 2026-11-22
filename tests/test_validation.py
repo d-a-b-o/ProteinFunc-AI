@@ -64,3 +64,43 @@ def test_low_complexity_is_warning_but_real_proteins_are_not():
     assert complexity_warning("X" * 30 + "MKTAYIAKQR") is not None
     for record in validate_text(read_input_file(EXAMPLES / "muestra.fasta"), None).records:
         assert complexity_warning(record.sequence) is None, record.record_id
+
+
+def test_example_test_files_validate_as_documented():
+    """Los FASTA de examples/pruebas mantienen el resultado descrito en su LEEME.md."""
+    expected = {
+        "01_proteinas_conocidas.fasta": "8 registros · 8 válidos",
+        "02_secuencia_para_pegar.txt": "1 registro · 1 válido",
+        "03_casos_limite.fasta": "6 registros · 6 válidos · 2 con aviso",
+        "04_errores.fasta": "7 registros · 2 válidos · 5 con error",
+        "05_lote_300_sinteticas.fasta": "300 registros · 300 válidos · 94 con aviso",
+    }
+    folder = EXAMPLES / "pruebas"
+    for name, summary in expected.items():
+        assert validate_text(read_input_file(folder / name), 512).summary() == summary, name
+    report = validate_text(read_input_file(folder / "06_texto_antes_de_cabecera.fasta"), 512)
+    assert "antes de la primera cabecera" in report.global_errors[0]
+    report = validate_text(read_input_file(folder / "07_adn_en_vez_de_proteina.fasta"), 512)
+    assert report.summary() == "3 registros · 1 válido · 2 con error"
+
+
+def test_dna_and_rna_are_rejected_but_protein_extremes_are_not():
+    from proteinfunc_app.core.validation import looks_like_nucleotides
+
+    dna = "ATCAGCATCGACAGCTAGCATCAGCTAGCATCGACTAGCATCGACTAGCATCGATCAGCTAGCAC"
+    report = validate_text(f">gen\n{dna}\n>arn\n{dna.replace('T', 'U')}\n", 512)
+    assert [r.status for r in report.records] == [ERROR, ERROR]
+    assert "ADN/ARN" in report.records[0].messages[0]
+    assert validate_text(dna, 512).records[0].status == ERROR  # También pegada sin cabecera.
+    assert not looks_like_nucleotides("G" * 50)            # Poliglicina: baja complejidad, no ADN.
+    assert not looks_like_nucleotides("ACGTACGT")           # Demasiado corta para decidir.
+    for record in validate_text(read_input_file(EXAMPLES / "pruebas" / "01_proteinas_conocidas.fasta"), 512).records:
+        assert not looks_like_nucleotides(record.sequence), record.record_id
+
+
+def test_low_complexity_message_explains_the_cause():
+    from proteinfunc_app.core.validation import complexity_warning
+
+    assert "ocupa el 100%" in complexity_warning("G" * 50)
+    message = complexity_warning("ACDE" * 15)
+    assert "4 aminoácidos distintos" in message and "bits" in message
