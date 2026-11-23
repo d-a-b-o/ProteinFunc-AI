@@ -1,0 +1,13 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFuncAI\\proteinfunc-check.exe",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\examples\\con_errores.fasta"
+  ],
+  "start": "2026-11-22T13:34:56.572609-05:00",
+  "seconds": 5.266870100051165,
+  "exit_code": 0,
+  "peak_working_set_bytes": 411533312,
+  "samples": 104,
+  "scope": "Proceso CLI: inicio, integridad, carga, validaci\u00f3n e inferencia. No es tiempo de inferencia aislado.",
+  "network": "Variables offline; red f\u00edsica no desconectada."
+}

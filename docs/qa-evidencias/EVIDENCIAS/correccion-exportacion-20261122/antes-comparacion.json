@@ -1,0 +1,275 @@
+{
+  "sin-busqueda": {
+    "query": "",
+    "visible_keys": [
+      [
+        "P1",
+        "GO:1"
+      ],
+      [
+        "P1",
+        "GO:4"
+      ],
+      [
+        "P2",
+        "GO:1"
+      ],
+      [
+        "P1",
+        "GO:2"
+      ],
+      [
+        "P2",
+        "GO:5"
+      ]
+    ],
+    "formats": {
+      "csv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": true
+      },
+      "tsv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": true
+      },
+      "json": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": true
+      }
+    }
+  },
+  "GO1": {
+    "query": "GO:1",
+    "visible_keys": [
+      [
+        "P1",
+        "GO:1"
+      ],
+      [
+        "P2",
+        "GO:1"
+      ]
+    ],
+    "formats": {
+      "csv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      },
+      "tsv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      },
+      "json": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      }
+    }
+  },
+  "sin-coincidencias": {
+    "query": "inexistente",
+    "visible_keys": [],
+    "formats": {
+      "csv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      },
+      "tsv": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      },
+      "json": {
+        "exported_keys": [
+          [
+            "P1",
+            "GO:1"
+          ],
+          [
+            "P1",
+            "GO:2"
+          ],
+          [
+            "P1",
+            "GO:4"
+          ],
+          [
+            "P2",
+            "GO:1"
+          ],
+          [
+            "P2",
+            "GO:5"
+          ]
+        ],
+        "matches_visible": false
+      }
+    }
+  }
+}

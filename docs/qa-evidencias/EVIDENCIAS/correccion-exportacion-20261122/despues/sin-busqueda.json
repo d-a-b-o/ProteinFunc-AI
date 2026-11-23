@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "model": "esm2",
+  "input": ">P1\nMKT\n>P2\nMKT\n>P3\nMKT\n",
+  "results": [
+    {
+      "id": "P1",
+      "sequence": "MKT",
+      "length": 3,
+      "residues_used": 3,
+      "truncated": false,
+      "threshold": 0.45,
+      "predictions": [
+        {
+          "go_term": "GO:1",
+          "name": "unión especial",
+          "aspect": "MF",
+          "score": 0.9,
+          "direct_score": 0.9,
+          "origin": "direct"
+        },
+        {
+          "go_term": "GO:2",
+          "name": "proceso de unión",
+          "aspect": "BP",
+          "score": 0.6,
+          "direct_score": 0.1,
+          "origin": "propagated"
+        },
+        {
+          "go_term": "GO:4",
+          "name": "función raíz",
+          "aspect": "MF",
+          "score": 0.8,
+          "direct_score": 0.1,
+          "origin": "propagated"
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "P2",
+      "sequence": "MKT",
+      "length": 3,
+      "residues_used": 3,
+      "truncated": false,
+      "threshold": 0.45,
+      "predictions": [
+        {
+          "go_term": "GO:1",
+          "name": "unión especial",
+          "aspect": "MF",
+          "score": 0.7,
+          "direct_score": 0.7,
+          "origin": "direct"
+        },
+        {
+          "go_term": "GO:5",
+          "name": "membrana compartida",
+          "aspect": "CC",
+          "score": 0.55,
+          "direct_score": 0.55,
+          "origin": "direct"
+        }
+      ],
+      "status": "ok"
+    },
+    {
+      "id": "P3",
+      "sequence": "MKT",
+      "length": 3,
+      "residues_used": 3,
+      "truncated": false,
+      "threshold": 0.45,
+      "predictions": [],
+      "status": "no_terms_above_threshold"
+    }
+  ],
+  "metadata": {
+    "application": "ProteinFunc AI Desktop",
+    "app_version": "0.2.1",
+    "exported_at": "2026-11-22T14:14:00",
+    "run_started_at": "2026-11-22T14:14:00",
+    "run_finished_at": null,
+    "source": "sintetico.fasta",
+    "model_kind": "esm2",
+    "model_fingerprint_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "model_threshold": 0.45,
+    "max_length": 512,
+    "filter": {
+      "threshold": 0.45,
+      "aspects": [
+        "MF",
+        "BP",
+        "CC"
+      ],
+      "protein": "todas",
+      "include_propagated": true,
+      "specific_only": false
+    },
+    "proteins_analyzed": 3,
+    "records_rejected": 0,
+    "performance": {},
+    "note": "Los puntajes son salidas sigmoid con propagación por la jerarquía GO; no son probabilidades calibradas. Que ninguna función supere el umbral no implica que la proteína carezca de función."
+  }
+}

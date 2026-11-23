@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-22T14:17:57.225790-05:00",
+  "base_commit": "c38323717be241cfa75d7684d0ff4ab7343270cd",
+  "tracked_files_modified": [
+    "proteinfunc_app/core/results.py",
+    "proteinfunc_app/ui/main_window.py"
+  ],
+  "production_patch_sha256": "537f4f62c4093696d56ff8cd15c109d10667c32a48d64ee6a6dccdf5e0a0ef4e",
+  "new_test_sha256": "84ffa4e90a1ddb156206def7a433dadf1ddaab454d786839c60c7fd9db1a5509",
+  "historical_evidence_modified": [],
+  "source_model_modified": [],
+  "distributions": {
+    "0.2.0": {
+      "added": [],
+      "missing": [],
+      "modified": []
+    },
+    "0.2.1": {
+      "added": [],
+      "missing": [],
+      "modified": []
+    }
+  },
+  "git_diff_check_exit_code": 0,
+  "status": " M proteinfunc_app/core/results.py\n M proteinfunc_app/ui/main_window.py\n?? docs/\n?? tests/test_export_search.py\n",
+  "application_version_file_changed": false,
+  "installation": "No se instalaron dependencias en esta corrección."
+}

@@ -1,0 +1,15 @@
+{
+  "scope": "Fuente 0.2.1, Qt offscreen, fixture sintética. No ejecutable ni escritorio.",
+  "search": "GO:1",
+  "visible_rows": 1,
+  "exported_prediction_terms": [
+    "GO:1",
+    "GO:2"
+  ],
+  "search_pass": true,
+  "export_matches_visible": false,
+  "status": "FALLIDO",
+  "expected": "La exportación de resultados visibles solo contiene GO:1 con búsqueda GO:1 activa.",
+  "actual": "La búsqueda se aplica al proxy Qt; el exportador recibe current_view() sin búsqueda.",
+  "settings_and_history": "C:\\Users\\Claudio\\AppData\\Local\\Temp\\qa021-functional-muxya10o"
+}

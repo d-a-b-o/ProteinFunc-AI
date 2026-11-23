@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="38" skipped="0" tests="41" time="2.080" timestamp="2026-11-22T14:13:25.115690-05:00" hostname="DESKTOP-I80KSN6"><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[-aspects0-45-False-5-csv]" time="0.073" /><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[-aspects0-45-False-5-tsv]" time="0.048" /><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[-aspects0-45-False-5-json]" time="0.046" /><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects1-45-False-2-csv]" time="0.042"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e6944ea690) at 0x000001E693C7A4C0&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693AA9A90&gt;
+fmt = 'csv', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects1-45-False-2-tsv]" time="0.040"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e6946306c0) at 0x000001E695C33B00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693AABF50&gt;
+fmt = 'tsv', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects1-45-False-2-json]" time="0.039"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e6946c2220) at 0x000001E695D22980&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro5')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693B2D5B0&gt;
+fmt = 'json', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:2') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[  UnI\xd3n  -aspects2-45-False-3-csv]" time="0.040"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains 2 more items, first extra item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692c607c0) at 0x000001E69659F380&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro6')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB4500&gt;
+fmt = 'csv', query = '  UnIÓn  ', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 3
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains 2 more items, first extra item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[  UnI\xd3n  -aspects2-45-False-3-tsv]" time="0.042"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains 2 more items, first extra item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69489b590) at 0x000001E6965CA440&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro7')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB6360&gt;
+fmt = 'tsv', query = '  UnIÓn  ', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 3
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains 2 more items, first extra item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[  UnI\xd3n  -aspects2-45-False-3-json]" time="0.040"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains 2 more items, first extra item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e6949f2a80) at 0x000001E695CCB880&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro8')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CAEC90&gt;
+fmt = 'json', query = '  UnIÓn  ', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 3
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 2 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains 2 more items, first extra item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects3-45-False-2-csv]" time="0.049"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains one more item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694aef060) at 0x000001E695CCB600&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro9')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CADAF0&gt;
+fmt = 'csv', query = 'unión', aspects = ('MF',), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains one more item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects3-45-False-2-tsv]" time="0.048"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains one more item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694af4160) at 0x000001E696613E40&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro10')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0C170&gt;
+fmt = 'tsv', query = 'unión', aspects = ('MF',), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains one more item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects3-45-False-2-json]" time="0.047"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')&#10;  Left contains one more item: ('P2', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694c74aa0) at 0x000001E69663B640&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro11')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0D5E0&gt;
+fmt = 'json', query = 'unión', aspects = ('MF',), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:1')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         At index 1 diff: ('P1', 'GO:4') != ('P2', 'GO:1')
+E         Left contains one more item: ('P2', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects4-45-False-1-csv]" time="0.050"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69666DB10&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694c68da0) at 0x000001E6965A3900&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro12')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0F680&gt;
+fmt = 'csv', query = 'unión', aspects = ('BP',), threshold = 45
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+                assert all(p["predictions"] for p in data["results"])
+            else:
+&gt;               assert all(row["go_term"] for row in data)
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69666DB10&gt;)
+
+tests\test_export_search.py:130: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects4-45-False-1-tsv]" time="0.047"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69664E9B0&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694e9ad50) at 0x000001E696630540&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro13')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E696604FE0&gt;
+fmt = 'tsv', query = 'unión', aspects = ('BP',), threshold = 45
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+                assert all(p["predictions"] for p in data["results"])
+            else:
+&gt;               assert all(row["go_term"] for row in data)
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69664E9B0&gt;)
+
+tests\test_export_search.py:130: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[uni\xf3n-aspects4-45-False-1-json]" time="0.046"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E696663AC0&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694ffa0d0) at 0x000001E6965A2B00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro14')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E6966066C0&gt;
+fmt = 'json', query = 'unión', aspects = ('BP',), threshold = 45
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+&gt;               assert all(p["predictions"] for p in data["results"])
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E696663AC0&gt;)
+
+tests\test_export_search.py:128: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[membrana-aspects5-10-False-2-csv]" time="0.048"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E696678EE0&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e695001390) at 0x000001E69885B740&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro15')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E696658380&gt;
+fmt = 'csv', query = 'membrana', aspects = ('CC',), threshold = 10
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+                assert all(p["predictions"] for p in data["results"])
+            else:
+&gt;               assert all(row["go_term"] for row in data)
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E696678EE0&gt;)
+
+tests\test_export_search.py:130: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[membrana-aspects5-10-False-2-tsv]" time="0.047"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69667D220&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e694ff5d50) at 0x000001E6965BC300&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro16')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E696659DF0&gt;
+fmt = 'tsv', query = 'membrana', aspects = ('CC',), threshold = 10
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+                assert all(p["predictions"] for p in data["results"])
+            else:
+&gt;               assert all(row["go_term"] for row in data)
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E69667D220&gt;)
+
+tests\test_export_search.py:130: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[membrana-aspects5-10-False-2-json]" time="0.048"><failure message="assert False&#10; +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E698855FF0&gt;)">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e6952a0b00) at 0x000001E69888B900&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro17')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E6988405F0&gt;
+fmt = 'json', query = 'membrana', aspects = ('CC',), threshold = 10
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+        assert sorted(keys) == sorted(visible)
+        assert len(keys) == len(set(keys))
+        if query.strip():
+            if fmt == "json":
+&gt;               assert all(p["predictions"] for p in data["results"])
+E               assert False
+E                +  where False = all(&lt;generator object test_export_matches_visible_rows.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001E698855FF0&gt;)
+
+tests\test_export_search.py:128: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects6-80-False-1-csv]" time="0.051"><failure message="AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]&#10;  &#10;  Left contains one more item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (&#10;            'P1',...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69529d350) at 0x000001E696591800&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro18')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698843C20&gt;
+fmt = 'csv', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 80
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]
+E         
+E         Left contains one more item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (
+E                   'P1',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects6-80-False-1-tsv]" time="0.050"><failure message="AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]&#10;  &#10;  Left contains one more item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (&#10;            'P1',...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699b17be0) at 0x000001E696632540&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro19')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0FE90&gt;
+fmt = 'tsv', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 80
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]
+E         
+E         Left contains one more item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (
+E                   'P1',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[GO:1-aspects6-80-False-1-json]" time="0.046"><failure message="AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]&#10;  &#10;  Left contains one more item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (&#10;            'P1',...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699b1bdb0) at 0x000001E695C33C40&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro20')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0CCE0&gt;
+fmt = 'json', query = 'GO:1', aspects = ('MF', 'BP', 'CC'), threshold = 80
+specific = False, count = 1
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P1', 'GO:4')] == [('P1', 'GO:1')]
+E         
+E         Left contains one more item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (
+E                   'P1',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[inexistente-aspects7-45-False-0-csv]" time="0.044"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 5 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699b11190) at 0x000001E695CBDE40&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro21')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CAF620&gt;
+fmt = 'csv', query = 'inexistente', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 5 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[inexistente-aspects7-45-False-0-tsv]" time="0.044"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 5 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692d421a0) at 0x000001E6965B4A40&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro22')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB7E90&gt;
+fmt = 'tsv', query = 'inexistente', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 5 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[inexistente-aspects7-45-False-0-json]" time="0.041"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 5 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692d4a1e0) at 0x000001E6965A0A00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro23')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB4F80&gt;
+fmt = 'json', query = 'inexistente', aspects = ('MF', 'BP', 'CC')
+threshold = 45, specific = False, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 5 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[ra\xedz-aspects8-45-True-0-csv]" time="0.045"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 4 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692d50de0) at 0x000001E696593380&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro24')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695D0D7F0&gt;
+fmt = 'csv', query = 'raíz', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = True, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 4 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[ra\xedz-aspects8-45-True-0-tsv]" time="0.049"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 4 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692d59330) at 0x000001E6989139C0&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro25')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CACC50&gt;
+fmt = 'tsv', query = 'raíz', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = True, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 4 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[ra\xedz-aspects8-45-True-0-json]" time="0.045"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []&#10;  &#10;  Left contains 4 more items, first extra item: ('P1', 'GO:1')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  - []&#10;  + [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e692d3d250) at 0x000001E695CD5F00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro26')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693AA0050&gt;
+fmt = 'json', query = 'raíz', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = True, count = 0
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == []
+E         
+E         Left contains 4 more items, first extra item: ('P1', 'GO:1')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         - []
+E         + [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[Propagado-aspects9-45-False-2-csv]" time="0.040"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699e135e0) at 0x000001E69893F940&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro27')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693B2F7A0&gt;
+fmt = 'csv', query = 'Propagado', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[Propagado-aspects9-45-False-2-tsv]" time="0.041"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699e19100) at 0x000001E695CF4D00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro28')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698841730&gt;
+fmt = 'tsv', query = 'Propagado', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[Propagado-aspects9-45-False-2-json]" time="0.041"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;  +     (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699e24c50) at 0x000001E69CFB3640&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro29')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698842B40&gt;
+fmt = 'json', query = 'Propagado', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:2...'P1', 'GO:4')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P1', 'GO:2')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E         +     (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[P2-aspects10-45-False-2-csv]" time="0.039"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699e265a0) at 0x000001E695C32C00&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro30')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E693B2D9D0&gt;
+fmt = 'csv', query = 'P2', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[P2-aspects10-45-False-2-tsv]" time="0.039"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e699e0fe30) at 0x000001E69CFE3980&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro31')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB7380&gt;
+fmt = 'tsv', query = 'P2', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_export_matches_visible_rows[P2-aspects10-45-False-2-json]" time="0.041"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]&#10;  &#10;  At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')&#10;  Left contains 3 more items, first extra item: ('P1', 'GO:4')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a35dd90) at 0x000001E693C07DC0&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_export_matches_visible_ro32')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E695CB5EE0&gt;
+fmt = 'json', query = 'P2', aspects = ('MF', 'BP', 'CC'), threshold = 45
+specific = False, count = 2
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    @pytest.mark.parametrize("query,aspects,threshold,specific,count", SCENARIOS)
+    def test_export_matches_visible_rows(export_window, tmp_path, monkeypatch, fmt,
+                                         query, aspects, threshold, specific, count):
+        w = export_window
+        w.specific_check.setChecked(specific)
+        for aspect, button in w.aspect_buttons.items():
+            button.setChecked(aspect in aspects)
+        w.slider.setValue(threshold)
+        w.search.setText(query)
+        w.proxy.sort(0, Qt.AscendingOrder)
+        visible = proxy_keys(w)
+        assert len(visible) == count
+        path, _ = export_through_dialog(w, tmp_path, monkeypatch, fmt)
+        keys, data = exported_keys(path, fmt)
+&gt;       assert sorted(keys) == sorted(visible)
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P2', 'GO:1...'P2', 'GO:5')]
+E         
+E         At index 0 diff: ('P1', 'GO:1') != ('P2', 'GO:1')
+E         Left contains 3 more items, first extra item: ('P1', 'GO:4')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:124: AssertionError</failure></testcase><testcase classname="tests.test_export_search" name="test_search_reset_and_sorting_keep_identity[csv]" time="0.037"><failure message="AttributeError: 'ViewFilter' object has no attribute 'visible_keys'">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a362980) at 0x000001E6965B8740&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_search_reset_and_sorting_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698843D40&gt;
+fmt = 'csv'
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    def test_search_reset_and_sorting_keep_identity(export_window, tmp_path, monkeypatch, fmt):
+        w = export_window
+        w.search.setText("GO:1")
+        w.protein_combo.setCurrentIndex(w.protein_combo.findData("P2"))
+        selected = w.current_view()
+&gt;       assert selected.visible_keys == frozenset({("P2", "GO:1")})
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'ViewFilter' object has no attribute 'visible_keys'
+
+tests\test_export_search.py:143: AttributeError</failure></testcase><testcase classname="tests.test_export_search" name="test_search_reset_and_sorting_keep_identity[tsv]" time="0.038"><failure message="AttributeError: 'ViewFilter' object has no attribute 'visible_keys'">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a3693d0) at 0x000001E69CF82800&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_search_reset_and_sorting_1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698842210&gt;
+fmt = 'tsv'
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    def test_search_reset_and_sorting_keep_identity(export_window, tmp_path, monkeypatch, fmt):
+        w = export_window
+        w.search.setText("GO:1")
+        w.protein_combo.setCurrentIndex(w.protein_combo.findData("P2"))
+        selected = w.current_view()
+&gt;       assert selected.visible_keys == frozenset({("P2", "GO:1")})
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'ViewFilter' object has no attribute 'visible_keys'
+
+tests\test_export_search.py:143: AttributeError</failure></testcase><testcase classname="tests.test_export_search" name="test_search_reset_and_sorting_keep_identity[json]" time="0.038"><failure message="AttributeError: 'ViewFilter' object has no attribute 'visible_keys'">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a3673c0) at 0x000001E698896280&gt;
+tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_search_reset_and_sorting_2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E698843A10&gt;
+fmt = 'json'
+
+    @pytest.mark.parametrize("fmt", ["csv", "tsv", "json"])
+    def test_search_reset_and_sorting_keep_identity(export_window, tmp_path, monkeypatch, fmt):
+        w = export_window
+        w.search.setText("GO:1")
+        w.protein_combo.setCurrentIndex(w.protein_combo.findData("P2"))
+        selected = w.current_view()
+&gt;       assert selected.visible_keys == frozenset({("P2", "GO:1")})
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'ViewFilter' object has no attribute 'visible_keys'
+
+tests\test_export_search.py:143: AttributeError</failure></testcase><testcase classname="tests.test_export_search" name="test_absent_and_empty_selection_are_distinct[None-5]" time="0.001"><failure message="TypeError: ViewFilter.__init__() got an unexpected keyword argument 'visible_keys'">selection = None, expected = 5
+
+    @pytest.mark.parametrize("selection,expected", [(None, 5), (frozenset(), 0)])
+    def test_absent_and_empty_selection_are_distinct(selection, expected):
+        r = synthetic_result()
+&gt;       view = ViewFilter(.45, visible_keys=selection)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: ViewFilter.__init__() got an unexpected keyword argument 'visible_keys'
+
+tests\test_export_search.py:162: TypeError</failure></testcase><testcase classname="tests.test_export_search" name="test_absent_and_empty_selection_are_distinct[selection1-0]" time="0.001"><failure message="TypeError: ViewFilter.__init__() got an unexpected keyword argument 'visible_keys'">selection = frozenset(), expected = 0
+
+    @pytest.mark.parametrize("selection,expected", [(None, 5), (frozenset(), 0)])
+    def test_absent_and_empty_selection_are_distinct(selection, expected):
+        r = synthetic_result()
+&gt;       view = ViewFilter(.45, visible_keys=selection)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: ViewFilter.__init__() got an unexpected keyword argument 'visible_keys'
+
+tests\test_export_search.py:162: TypeError</failure></testcase><testcase classname="tests.test_export_search" name="test_prediction_identity_is_unique_across_proteins_and_history" time="0.002"><failure message="AttributeError: 'RunResult' object has no attribute 'validate_prediction_keys'">tmp_path = WindowsPath('C:/Users/Claudio/AppData/Local/Temp/qa-export-fix-5zgxlptt/test_prediction_identity_is_un0')
+
+    def test_prediction_identity_is_unique_across_proteins_and_history(tmp_path):
+        r = synthetic_result()
+&gt;       r.validate_prediction_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'RunResult' object has no attribute 'validate_prediction_keys'
+
+tests\test_export_search.py:171: AttributeError</failure></testcase><testcase classname="tests.test_export_search" name="test_ambiguous_prediction_keys_are_rejected" time="0.036"><failure message="Failed: DID NOT RAISE ValueError">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a3523f0) at 0x000001E6988BDD40&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E696606FF0&gt;
+
+    def test_ambiguous_prediction_keys_are_rejected(export_window, monkeypatch):
+        w = export_window
+        w.result.proteins[0]["predictions"].append(copy.deepcopy(w.result.proteins[0]["predictions"][0]))
+        w.search.setText("GO:1")
+&gt;       with pytest.raises(ValueError, match="duplicad"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests\test_export_search.py:189: Failed</failure></testcase><testcase classname="tests.test_export_search" name="test_propagated_export_option_still_limits_visible_selection" time="0.035"><failure message="AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]&#10;  &#10;  Left contains one more item: ('P2', 'GO:5')&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        (&#10;            'P1',...&#10;  &#10;  ...Full output truncated, use '-vv' to show">export_window = &lt;proteinfunc_app.ui.main_window.MainWindow(0x1e69a72d7c0) at 0x000001E69884BBC0&gt;
+
+    def test_propagated_export_option_still_limits_visible_selection(export_window):
+        w = export_window
+        w.search.setText("unión")
+        view = w.current_view()
+        view.include_propagated = False
+&gt;       assert [(r.protein_id, r.go_term) for r in w.result.rows(view)] == [("P1", "GO:1"), ("P2", "GO:1")]
+E       AssertionError: assert [('P1', 'GO:1...'P2', 'GO:5')] == [('P1', 'GO:1...'P2', 'GO:1')]
+E         
+E         Left contains one more item: ('P2', 'GO:5')
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               (
+E                   'P1',...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests\test_export_search.py:203: AssertionError</failure></testcase></testsuite></testsuites>

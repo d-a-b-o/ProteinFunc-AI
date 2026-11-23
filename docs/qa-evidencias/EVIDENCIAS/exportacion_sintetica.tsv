@@ -1,0 +1,19 @@
+﻿# application: ProteinFunc AI Desktop
+# app_version: 0.2.1
+# exported_at: 2026-11-22T13:34:56
+# run_started_at: 2026-11-22T13:34:56
+# run_finished_at: None
+# source: prueba.fasta
+# model_kind: esm2
+# model_fingerprint_sha256: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+# model_threshold: 0.45
+# max_length: 512
+# filter: {"threshold": 0.45, "aspects": ["MF", "BP", "CC"], "protein": "todas", "include_propagated": true, "specific_only": false}
+# proteins_analyzed: 2
+# records_rejected: 0
+# performance: {"seconds": 1.0, "peak_memory_mb": 100.0}
+# note: Los puntajes son salidas sigmoid con propagación por la jerarquía GO; no son probabilidades calibradas. Que ninguna función supere el umbral no implica que la proteína carezca de función.
+protein_id	go_term	name	aspect	score	direct_score	origin	length	residues_used	truncated
+proteína_á	GO:1	unión	MF	0.900000	0.900000	direct	3	3	false
+proteína_á	GO:2	proceso	BP	0.600000	0.200000	propagated	3	3	false
+P2		Ninguna función superó el umbral					600	512	true

@@ -1,0 +1,33 @@
+# Resumen académico
+
+El 22 de noviembre de 2026 se realizó una verificación técnica de ProteinFunc AI Desktop en Windows 10 de 64 bits, con Python 3.12.10 y pytest 9.1.1. Se evaluó el repositorio en la rama main, commit `c38323717be241cfa75d7684d0ff4ab7343270cd`, y la distribución local disponible. La revisión se efectuó sin modificar el código de producción, los modelos ni las pruebas existentes.
+
+De las 43 funciones de prueba identificadas, se ejecutaron 22 y todas aprobaron, sin fallos ni omisiones mediante skip. Pytest informó una duración de 0.53 segundos. Se verificaron validación de secuencias, detección de entradas incorrectas, advertencias de longitud, filtros, exportación CSV/TSV/JSON, persistencia y reapertura de resultados en bases temporales e integridad de artefactos. Las 21 pruebas restantes quedaron bloqueadas por dependencias ausentes. Los filtros y exportaciones se comprobaron con datos sintéticos, sin atribuirles significado biológico.
+
+El comprobador distribuido cargó el modelo real y obtuvo predicciones en CPU para tres proteínas de muestra. En otra ejecución procesó únicamente el registro válido de un FASTA con cinco registros, descartando cuatro incorrectos. Ambos procesos finalizaron correctamente. La primera ejecución completa duró 29.0400 segundos y reportó 27.5 segundos de carga; la segunda duró 5.2669 segundos y reportó 4.6 segundos de carga. El máximo de memoria residente del segundo proceso fue 392.47 MiB. No se midió el tiempo aislado de inferencia ni su rendimiento en proteínas por segundo.
+
+Los siete archivos del modelo de la distribución coincidieron con los del repositorio por SHA-256, con huella de paquete `7b9148321accb7d5d1b6b0b9727b5f307b9c173df68e0f1a85f8c561f210f2b0`. La aplicación fuente declara versión 0.2.1, mientras que el comprobador distribuido informa 0.2.0; por ello no se establece equivalencia completa entre ambos programas. Las comprobaciones visuales no se ejecutaron debido a fallos de captura de la herramienta de escritorio. Se utilizó configuración lógica offline, sin desconectar físicamente la red, por lo que la operación sin conectividad permanece pendiente. Los resultados obtenidos verifican únicamente los comportamientos ejecutados y no constituyen una evaluación independiente de exactitud biológica ni del rendimiento oficial de CAFA.
+
+
+---
+
+# Actualización académica: versión 0.2.1
+
+El texto anterior describe la auditoría inicial y se conserva como antecedente. En la continuación del 22 de noviembre de 2026 se verificó una distribución local cuyos dos ejecutables declararon versión 0.2.1. Los siete archivos de su modelo coincidieron por SHA-256 con el repositorio y la distribución 0.2.0. Se registraron las huellas de todos los archivos de ambas distribuciones y se comprobó que permanecieran intactas durante la evaluación.
+
+Con autorización del usuario se preparó un entorno virtual aislado de Python 3.12.10 con las versiones fijadas de las dependencias de producción, PyTorch CPU, pytest 9.2.0 y pytest-qt 4.5.0. La suite completa del código fuente 0.2.1, commit c38323717be241cfa75d7684d0ff4ab7343270cd, obtuvo 43 pruebas aprobadas, cero fallidas y cero omitidas, en 28.36 segundos según pytest. Esto resolvió las 21 pruebas previamente pendientes, incluidas trece pruebas Qt sin pantalla, la comparación numérica con la referencia exportada de Kaggle y la cancelación sin resultados parciales.
+
+Cuatro comprobaciones del ejecutable 0.2.1 finalizaron correctamente: FASTA de tres proteínas, archivo con cuatro registros inválidos y uno válido, archivo con ADN/ARN y una proteína, y seis casos límite. En el control de nucleótidos se rechazaron ambos registros ADN/ARN y se procesó únicamente la proteína válida. Las verificaciones del validador fuente confirmaron mensajes que explican predominio de residuos, diversidad reducida y proporción de residuos ambiguos. Estas advertencias no impiden la inferencia y no acreditan fiabilidad biológica de los puntajes.
+
+Una comprobación funcional adicional, independiente de la suite existente, reprodujo un defecto en fuente 0.2.1 con Qt sin pantalla: con búsqueda GO:1 activa se mostró una fila, mientras el JSON exportado incluyó GO:1 y GO:2. Por tanto, las 43 pruebas aprobadas no implican aceptación completa del producto. Quedan pendientes el contraste de este defecto en el ejecutable mediante interacción visual, las comprobaciones manuales de escritorio y la operación con conectividad física desactivada. No se modificaron producción, modelos, ejecutables, pruebas existentes ni el historial del usuario; tampoco se recalculó la calidad predictiva biológica o la métrica oficial CAFA.
+
+
+---
+
+# Validación posterior de la corrección de exportación
+
+El defecto QA-021-EXPORT-BUSQUEDA se corrigió en el código fuente local de ProteinFunc AI Desktop 0.2.1, conservando la versión y sin recompilar los ejecutables. La causa era la omisión de la selección del proxy de búsqueda al exportar. Se incorporó una selección temporal por identidad de proteína y término GO, compartida por CSV, TSV y JSON. Se distinguió selección ausente de selección vacía y se comprobó la unicidad de las identidades al capturar la búsqueda.
+
+Con datos sintéticos y Qt sin pantalla, las exportaciones posteriores coincidieron con las predicciones visibles. En el caso GO:1, dos predicciones visibles de proteínas diferentes pasaron de cinco predicciones exportadas antes de corregir a dos después. Una búsqueda sin coincidencias produjo cero predicciones en los tres formatos. La suite completa aprobó 84 pruebas en 18.70 segundos según pytest, con cero fallos y cero omisiones; incluye las 43 anteriores y 41 regresiones nuevas. Antes se habían ejecutado y aprobado las 61 pruebas relacionadas.
+
+La validación acredita la corrección en fuente y conserva las evidencias del defecto original. Los ejecutables distribuidos permanecieron intactos y no incorporan el cambio. Continúan pendientes la revisión visual de un binario que integre la corrección y la comprobación con conectividad física desactivada. No se modificaron modelos ni resultados experimentales ni se reevaluó la exactitud biológica. [Registro técnico y evidencias](CORRECCION_EXPORTACION.md).

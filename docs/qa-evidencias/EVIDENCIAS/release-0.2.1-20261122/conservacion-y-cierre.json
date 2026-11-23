@@ -1,0 +1,20 @@
+{
+  "0.2.0": {
+    "files": 4969,
+    "added": [],
+    "missing": [],
+    "modified": []
+  },
+  "0.2.1": {
+    "files": 4968,
+    "added": [],
+    "missing": [],
+    "modified": []
+  },
+  "historical_evidence_modified": [],
+  "source_model_modified": [],
+  "commit": "c38323717be241cfa75d7684d0ff4ab7343270cd",
+  "tracked_diff": "",
+  "git_status": "?? docs/\n",
+  "date": "2026-11-22T14:00:18.024481-05:00"
+}

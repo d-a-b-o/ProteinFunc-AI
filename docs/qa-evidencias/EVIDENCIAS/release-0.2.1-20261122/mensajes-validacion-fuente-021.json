@@ -1,0 +1,218 @@
+{
+  "examples": {
+    "muestra.fasta": {
+      "summary": "3 registros · 3 válidos · 1 con aviso",
+      "global_errors": [],
+      "records": [
+        {
+          "id": "P01308",
+          "status": "ok",
+          "accepted": true,
+          "length": 110,
+          "messages": []
+        },
+        {
+          "id": "ubiquitina",
+          "status": "ok",
+          "accepted": true,
+          "length": 76,
+          "messages": []
+        },
+        {
+          "id": "ejemplo_kaggle",
+          "status": "warning",
+          "accepted": true,
+          "length": 1033,
+          "messages": [
+            "Secuencia de 1033 residuos: el modelo usará solo los primeros 512."
+          ]
+        }
+      ]
+    },
+    "con_errores.fasta": {
+      "summary": "5 registros · 1 válido · 4 con error",
+      "global_errors": [],
+      "records": [
+        {
+          "id": "valida_1",
+          "status": "ok",
+          "accepted": true,
+          "length": 76,
+          "messages": []
+        },
+        {
+          "id": "vacia",
+          "status": "error",
+          "accepted": false,
+          "length": 0,
+          "messages": [
+            "La secuencia está vacía."
+          ]
+        },
+        {
+          "id": "con_simbolos",
+          "status": "error",
+          "accepted": false,
+          "length": 24,
+          "messages": [
+            "Símbolos no admitidos '#' '1' en las posiciones 11, 18."
+          ]
+        },
+        {
+          "id": "valida_1",
+          "status": "error",
+          "accepted": false,
+          "length": 24,
+          "messages": [
+            "Identificador duplicado: ya aparece en el registro 1 (línea 1)."
+          ]
+        },
+        {
+          "id": "",
+          "status": "error",
+          "accepted": false,
+          "length": 10,
+          "messages": [
+            "Cabecera FASTA vacía: falta el identificador después de '>'."
+          ]
+        }
+      ]
+    },
+    "pruebas/07_adn_en_vez_de_proteina.fasta": {
+      "summary": "3 registros · 1 válido · 2 con error",
+      "global_errors": [],
+      "records": [
+        {
+          "id": "adn_codificante",
+          "status": "error",
+          "accepted": false,
+          "length": 72,
+          "messages": [
+            "Parece una secuencia de ADN/ARN (solo A, C, G, T/U), no de proteína. Esta aplicación necesita la secuencia de aminoácidos: tradúcela primero (por ejemplo con ExPASy Translate o Biopython) y vuelve a cargarla."
+          ]
+        },
+        {
+          "id": "arn_mensajero",
+          "status": "error",
+          "accepted": false,
+          "length": 72,
+          "messages": [
+            "Parece una secuencia de ADN/ARN (solo A, C, G, T/U), no de proteína. Esta aplicación necesita la secuencia de aminoácidos: tradúcela primero (por ejemplo con ExPASy Translate o Biopython) y vuelve a cargarla."
+          ]
+        },
+        {
+          "id": "proteina_valida",
+          "status": "ok",
+          "accepted": true,
+          "length": 54,
+          "messages": []
+        }
+      ]
+    },
+    "pruebas/03_casos_limite.fasta": {
+      "summary": "6 registros · 6 válidos · 2 con aviso",
+      "global_errors": [],
+      "records": [
+        {
+          "id": "corta_10aa",
+          "status": "ok",
+          "accepted": true,
+          "length": 10,
+          "messages": []
+        },
+        {
+          "id": "minusculas_y_espacios",
+          "status": "ok",
+          "accepted": true,
+          "length": 22,
+          "messages": []
+        },
+        {
+          "id": "con_asterisco_final",
+          "status": "ok",
+          "accepted": true,
+          "length": 34,
+          "messages": []
+        },
+        {
+          "id": "residuos_ambiguos_XBZUO",
+          "status": "ok",
+          "accepted": true,
+          "length": 16,
+          "messages": []
+        },
+        {
+          "id": "poliglicina_sin_sentido_biologico",
+          "status": "warning",
+          "accepted": true,
+          "length": 30,
+          "messages": [
+            "Secuencia de baja complejidad: G ocupa el 100% de los residuos. El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+          ]
+        },
+        {
+          "id": "larga_1500aa_SINTETICA",
+          "status": "warning",
+          "accepted": true,
+          "length": 1500,
+          "messages": [
+            "Secuencia de 1500 residuos: el modelo usará solo los primeros 512.",
+            "Secuencia de baja complejidad: F ocupa el 100% de los residuos. El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+          ]
+        }
+      ]
+    }
+  },
+  "controls": {
+    "poliglicina": [
+      {
+        "index": 1,
+        "line": 1,
+        "record_id": "query_1",
+        "header": "query_1",
+        "sequence": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+        "status": "warning",
+        "messages": [
+          "Secuencia de baja complejidad: G ocupa el 100% de los residuos. El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+        ]
+      }
+    ],
+    "diversidad_baja": [
+      {
+        "index": 1,
+        "line": 1,
+        "record_id": "query_1",
+        "header": "query_1",
+        "sequence": "ACDEACDEACDEACDEACDEACDEACDEACDEACDEACDEACDEACDEACDEACDEACDE",
+        "status": "warning",
+        "messages": [
+          "Secuencia de baja complejidad: usa solo 4 aminoácidos distintos (diversidad 2.0 bits; una proteína típica ronda 4,2). El modelo asigna funciones igualmente, pero los resultados son poco fiables."
+        ]
+      }
+    ],
+    "ambiguos": [
+      {
+        "index": 1,
+        "line": 1,
+        "record_id": "query_1",
+        "header": "query_1",
+        "sequence": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXMKTAYIAKQR",
+        "status": "warning",
+        "messages": [
+          "Secuencia atípica: 75% de residuos ambiguos (X/B/Z/J); los resultados son poco fiables."
+        ]
+      }
+    ],
+    "corta": [
+      {
+        "index": 1,
+        "line": 1,
+        "record_id": "query_1",
+        "header": "query_1",
+        "sequence": "ACGTACGT",
+        "status": "ok",
+        "messages": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFuncAI 0.2.1\\proteinfunc-check.exe",
+    "D:\\ISW-USIL-2026-2\\Bioinformatica\\TF\\ProteinFunc-AI\\examples\\con_errores.fasta"
+  ],
+  "start": "2026-11-22T13:52:50.556971-05:00",
+  "seconds": 5.729547200025991,
+  "exit_code": 0
+}

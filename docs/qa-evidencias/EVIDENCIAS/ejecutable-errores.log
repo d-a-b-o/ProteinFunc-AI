@@ -1,0 +1,19 @@
+W1122 13:35:00.996000 3688 D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFunc-AI\docs\qa-evidencias\EVIDENCIAS\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+ProteinFunc AI Desktop 0.2.0
+Paquete: D:\ISW-USIL-2026-2\Bioinformatica\TF\ProteinFuncAI\_internal\model
+  [OK] Archivos obligatorios presentes: 6 archivos
+  [OK] Huellas SHA-256 coinciden con SHA256SUMS: 6 archivos verificados
+  [OK] Versión de esquema del manifiesto: schema_version = 1 (se admite 1)
+  [OK] Vocabulario GO ordenado y sin duplicados: 768 términos
+  [OK] Metadatos para cada término del vocabulario: nombre, aspecto y ancestros
+  [OK] Aspecto MF/BP/CC válido en cada término: 
+  [OK] Ancestros GO dentro del vocabulario: reglas is_a / part_of coherentes
+  [OK] Umbral operativo en [0, 1]: umbral = 0.45
+  [OK] Longitud máxima positiva: max_length = 512
+  [OK] Tipo de modelo reconocido: kind = 'esm2'
+  [OK] Dimensiones de pesos ? vocabulario: salida del clasificador = 768, vocabulario = 768
+Huella del paquete (SHA-256): 7b9148321accb7d5d1b6b0b9727b5f307b9c173df68e0f1a85f8c561f210f2b0
+Modelo cargado en 4.6 s (cpu)
+Entrada con_errores.fasta: 5 registros · 1 válido · 4 con error
+  valida_1: 13 funciones ? 0.45 — GO:0005488 MF 0.707, GO:0005515 MF 0.628, GO:0009987 BP 0.623
+{"ok": true, "proteins": 1}

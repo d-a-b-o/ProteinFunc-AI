@@ -1,0 +1,37 @@
+[
+  {
+    "aspect": "MF",
+    "terms": [
+      "GO:1"
+    ],
+    "pass": true
+  },
+  {
+    "aspect": "BP",
+    "terms": [
+      "GO:2"
+    ],
+    "pass": true
+  },
+  {
+    "aspect": "CC",
+    "terms": [
+      "GO:3",
+      "GO:3"
+    ],
+    "pass": true
+  },
+  {
+    "thresholds": [
+      0.1,
+      0.45,
+      0.95
+    ],
+    "counts": [
+      4,
+      2,
+      0
+    ],
+    "pass": true
+  }
+]

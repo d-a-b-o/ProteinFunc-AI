@@ -597,11 +597,19 @@ class MainWindow(QMainWindow):
         self._refresh_table()
         self._refresh_state()
 
-    def current_view(self) -> ViewFilter:
+    def current_view(self, *, include_search: bool = True) -> ViewFilter:
         aspects = tuple(a for a, btn in self.aspect_buttons.items() if btn.isChecked())
+        visible_keys = None
+        if include_search and self.result is not None and self.search.text().strip():
+            self.result.validate_prediction_keys()
+            visible_keys = frozenset(
+                (row.protein_id, row.go_term)
+                for i in range(self.proxy.rowCount())
+                for row in [self.table_model.row_at(self.proxy.mapToSource(self.proxy.index(i, 0)).row())]
+            )
         return ViewFilter(threshold=self.slider.value() / 100, aspects=aspects,
                           protein_id=self.protein_combo.currentData(),
-                          specific_only=self.specific_check.isChecked())
+                          specific_only=self.specific_check.isChecked(), visible_keys=visible_keys)
 
     def _refresh_table(self, *_):
         if not self.result:
@@ -612,7 +620,8 @@ class MainWindow(QMainWindow):
             self.none_notice.setVisible(False)
             self._show_detail(None)
             return
-        view = self.current_view()
+        # El modelo fuente se reconstruye sin la instantánea del proxy anterior.
+        view = self.current_view(include_search=False)
         self.table_model.set_rows(self.result.rows(view))
         self.stack.setCurrentIndex(1)
         self._update_count()
@@ -719,7 +728,7 @@ class MainWindow(QMainWindow):
             return (f"<span style='color:{theme.MUTED}'>Aquí verás un resumen por proteína: cuántas funciones "
                     "tiene en cada aspecto y las principales. Selecciona una fila para ver el detalle del "
                     "término GO.</span>")
-        view = self.current_view()
+        view = self.current_view(include_search=False)
         summary = self.result.summary(view)
         out = []
         if not view.protein_id:
@@ -781,7 +790,11 @@ class MainWindow(QMainWindow):
     def export_results(self):
         if not self.result or self.running:
             return
-        view = self.current_view()
+        try:
+            view = self.current_view()
+        except ValueError as exc:
+            QMessageBox.warning(self, "No se pudo exportar", str(exc))
+            return
         rows = len(self.result.rows(view))
         empty = len(self.result.proteins_without_terms(view))
         stem = Path(self.result.source_name).stem if self.result.source_name != "Secuencia pegada" else "secuencia"

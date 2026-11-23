@@ -46,6 +46,8 @@ class ViewFilter:
     protein_id: str | None = None      # None = todas.
     include_propagated: bool = True
     specific_only: bool = False        # Ocultar ancestros de otro término visible.
+    # Instantánea de la búsqueda Qt: None no limita; conjunto vacío no admite ninguna fila.
+    visible_keys: frozenset[tuple[str, str]] | None = None
 
     def accepts(self, prediction: dict) -> bool:
         return (prediction["score"] >= self.threshold
@@ -84,6 +86,16 @@ class RunResult:
     def protein(self, protein_id: str) -> dict | None:
         return next((p for p in self.proteins if p["id"] == protein_id), None)
 
+    def validate_prediction_keys(self) -> None:
+        """La selección por identidad requiere una sola predicción por proteína y término."""
+        seen = set()
+        for protein in self.proteins:
+            for prediction in protein["predictions"]:
+                key = (protein["id"], prediction["go_term"])
+                if key in seen:
+                    raise ValueError(f"Predicción duplicada para proteína y término GO: {key!r}.")
+                seen.add(key)
+
     def visible_predictions(self, protein: dict, view: ViewFilter) -> list[dict]:
         """Predicciones de una proteína que pasan el filtro. Con ``specific_only`` se
         oculta todo término que sea ancestro de otro término visible de la misma proteína."""
@@ -93,6 +105,9 @@ class RunResult:
             for x in preds:
                 covered.update(self.ancestors.get(x["go_term"], ()))
             preds = [x for x in preds if x["go_term"] not in covered]
+        # Después de resolver especificidad: buscar un ancestro oculto no debe recuperarlo.
+        if view.visible_keys is not None:
+            preds = [x for x in preds if (protein["id"], x["go_term"]) in view.visible_keys]
         return preds
 
     def rows(self, view: ViewFilter) -> list[Row]:
@@ -111,6 +126,9 @@ class RunResult:
         return self.rows(ViewFilter(threshold=0.0))
 
     def proteins_without_terms(self, view: ViewFilter) -> list[str]:
+        if view.visible_keys is not None:
+            # Una búsqueda sin coincidencias no significa «sin funciones sobre el umbral».
+            return []
         return [p["id"] for p in self.proteins
                 if (not view.protein_id or p["id"] == view.protein_id)
                 and not any(view.accepts(x) for x in p["predictions"])]
@@ -160,6 +178,8 @@ class RunResult:
             if view.protein_id and p["id"] != view.protein_id:
                 continue
             preds = [dict(x) for x in self.visible_predictions(p, view)]
+            if view.visible_keys is not None and not preds:
+                continue
             item = {k: p[k] for k in ("id", "sequence", "length", "residues_used", "truncated")}
             item.update(threshold=float(view.threshold), predictions=preds,
                         status="ok" if preds else "no_terms_above_threshold")
