@@ -28,11 +28,9 @@ Se instala para tu usuario (sin `sudo`) y aparece en el menú de aplicaciones. S
 
 ## Novedades de esta versión
 
-- **Rechazo de ADN/ARN**: si cargas una secuencia de nucleótidos (solo A, C, G, T/U), la aplicación la rechaza con un mensaje que pide traducirla a proteína. Antes se aceptaba como «proteína» y el modelo le asignaba funciones sin sentido.
-- **Aviso de baja complejidad más claro**: indica la causa real (residuo dominante o poca diversidad de aminoácidos).
-- **FASTA de prueba** en el repositorio (`examples/pruebas/`), con una guía del resultado esperado. No se incluyen en el instalador.
+- **Exportación con búsqueda activa**: al exportar con texto en el buscador de la tabla, el archivo CSV, TSV o JSON incluye solo las filas visibles. Antes se exportaban también las filas ocultas por la búsqueda. Corrección de Claudio Bances.
 
-Incluye también todo lo de la 0.2.0: solo términos específicos, resumen por proteína, aviso de secuencias atípicas, Preferencias, rendimiento en el historial y licencias de terceros.
+Incluye todo lo de las versiones anteriores: rechazo de ADN/ARN, solo términos específicos, resumen por proteína, aviso de secuencias atípicas, Preferencias, rendimiento en el historial y licencias de terceros.
 
 ## Uso
 
